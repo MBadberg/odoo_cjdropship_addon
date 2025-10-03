@@ -82,8 +82,9 @@ cd odoo_cjdropship_addon
 ## ✅ Was das Installations-Skript macht | What the install script does
 
 - ✅ Findet automatisch Ihr Odoo-Verzeichnis | Automatically finds your Odoo directory
+- ✅ Prüft ob Modul bereits installiert ist und bietet Deinstallation an | Checks if module is already installed and offers to uninstall
 - ✅ Installiert das Modul am richtigen Ort | Installs the module in the correct location
-- ✅ Installiert Python-Abhängigkeiten | Installs Python dependencies
+- ✅ Installiert Python-Abhängigkeiten (pip3 oder apt) | Installs Python dependencies (pip3 or apt)
 - ✅ Setzt Berechtigungen | Sets permissions
 - ✅ Startet Odoo neu (optional) | Restarts Odoo (optional)
 

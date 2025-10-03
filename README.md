@@ -97,8 +97,14 @@ cp -r odoo_cjdropship_addon/cjdropship /path/to/odoo/addons/
 #### Schritt 2: Abhängigkeiten installieren
 
 ```bash
+# Mit pip3 (bevorzugt)
 pip3 install requests
+
+# Alternativ mit apt (wenn pip3 nicht verfügbar)
+sudo apt install python3-requests
 ```
+
+**Hinweis**: Das `install.sh` Skript installiert Abhängigkeiten automatisch.
 
 #### Schritt 3: Odoo neu starten
 
