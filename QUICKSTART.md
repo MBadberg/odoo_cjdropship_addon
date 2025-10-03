@@ -12,37 +12,71 @@ Get up and running with CJDropshipping integration in 10 minutes!
 
 ⚠️ **Important**: Only the `cjdropship` folder needs to be in the addons directory, not the entire repository!
 
-### Step 1: Clone and Copy Module
+### 🚀 Automatic Installation (Recommended)
+
+The easiest way - just run the installation script:
 
 ```bash
 # Clone the repository
+git clone https://github.com/MBadberg/odoo_cjdropship_addon.git
+cd odoo_cjdropship_addon
+
+# Run the automated installer
+./install.sh
+```
+
+The script will:
+- ✅ Find your Odoo addons directory automatically
+- ✅ Install the module (copy or symlink)
+- ✅ Install Python dependencies
+- ✅ Set proper permissions
+- ✅ Restart Odoo (optional)
+
+After the script completes, skip to **Step 5** below.
+
+### 📋 Manual Installation
+
+If you prefer manual installation:
+
+**Step 1:** Clone and Copy Module
+
+```bash
 cd /tmp
 git clone https://github.com/MBadberg/odoo_cjdropship_addon.git
-
-# Copy only the cjdropship folder to Odoo addons
 cp -r odoo_cjdropship_addon/cjdropship /path/to/odoo/addons/
 ```
 
-### Step 2: Install Dependencies
+**Step 2:** Install Dependencies
 
 ```bash
 pip3 install requests
 ```
 
-### Step 3: Restart Odoo
+**Step 3:** Restart Odoo
 
 ```bash
+sudo systemctl restart odoo
+# or
 ./odoo-bin -c odoo.conf
 ```
 
-### Step 4: Install Module
+**Step 4:** Verify Installation (Optional but Recommended)
+
+```bash
+cd odoo_cjdropship_addon
+./verify_installation.sh
+```
+
+This checks if everything is correctly installed.
+
+**Step 5:** Install Module in Odoo
 
 1. Go to **Apps** in Odoo
-2. Click **Update Apps List**
+2. Click **Update Apps List** (remove filters if needed)
 3. Search for **"CJDropshipping Integration"**
 4. Click **Install**
 
-💡 **Tip**: If the module shows as "Not installable", make sure only the `cjdropship` folder (not `odoo_cjdropship_addon`) is in your addons directory.
+💡 **Tip**: If the module shows as "Not installable", run `./verify_installation.sh` to diagnose the issue.
 
 ## Configuration (3 minutes)
 

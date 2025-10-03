@@ -15,60 +15,103 @@ Ein vollständiges Odoo 19 Addon für die Integration mit der CJDropshipping API
 
 ⚠️ **Wichtig**: Nur der `cjdropship` Ordner muss ins Addons-Verzeichnis, nicht das gesamte Repository!
 
-📖 **Detaillierte Anleitung**: Siehe [INSTALLATION_GUIDE.md](INSTALLATION_GUIDE.md) für ausführliche Installationsanweisungen und Fehlerbehebung.
+### 🚀 Automatische Installation (Empfohlen)
 
-### Voraussetzungen
+Die einfachste und schnellste Methode:
+
+```bash
+# 1. Repository klonen
+git clone https://github.com/MBadberg/odoo_cjdropship_addon.git
+cd odoo_cjdropship_addon
+
+# 2. Installations-Skript ausführen
+./install.sh
+```
+
+Das Skript führt automatisch folgende Schritte aus:
+- ✅ Findet Ihr Odoo Addons-Verzeichnis
+- ✅ Installiert das Modul (Kopie oder Symlink)
+- ✅ Installiert Python-Abhängigkeiten (`requests`)
+- ✅ Setzt die richtigen Berechtigungen
+- ✅ Startet Odoo neu (optional)
+
+### 🔍 Installation überprüfen
+
+Nachdem Sie das Modul installiert haben, überprüfen Sie die Installation:
+
+```bash
+./verify_installation.sh
+```
+
+Dieses Skript prüft:
+- ✅ Ob das Modul am richtigen Ort installiert ist
+- ✅ Ob alle erforderlichen Dateien vorhanden sind
+- ✅ Ob Python-Abhängigkeiten installiert sind
+- ✅ Ob die Modulstruktur korrekt ist
+
+### 📋 Manuelle Installation
+
+Falls Sie die automatische Installation nicht verwenden möchten:
+
+#### Voraussetzungen
 
 - Odoo 19.0
 - Python 3.10+
 - `requests` Python-Bibliothek
 - Aktives CJDropshipping-Konto mit API-Zugang
 
-### Schnellinstallation
+#### Schritt 1: Modul kopieren
 
-#### Option 1: Direktes Klonen ins Addons-Verzeichnis (Empfohlen)
-
-1. Klonen Sie das Repository:
 ```bash
+# Repository klonen
 cd /tmp
 git clone https://github.com/MBadberg/odoo_cjdropship_addon.git
-```
 
-2. Kopieren Sie nur den `cjdropship` Ordner in Ihr Odoo-Addons-Verzeichnis:
-```bash
+# Nur den cjdropship Ordner kopieren (nicht das ganze Repository!)
 cp -r odoo_cjdropship_addon/cjdropship /path/to/odoo/addons/
 ```
 
-3. Starten Sie Odoo neu:
+#### Schritt 2: Abhängigkeiten installieren
+
 ```bash
+pip3 install requests
+```
+
+#### Schritt 3: Odoo neu starten
+
+```bash
+sudo systemctl restart odoo
+# oder
 ./odoo-bin -c odoo.conf
 ```
 
-#### Option 2: Symlink erstellen
+#### Schritt 4: Modul in Odoo installieren
 
-1. Klonen Sie das Repository an einen beliebigen Ort:
+1. Öffnen Sie Odoo in Ihrem Browser
+2. Gehen Sie zu **Apps**
+3. Klicken Sie auf **"App-Liste aktualisieren"** (ggf. Filter entfernen)
+4. Suchen Sie nach **"CJDropshipping Integration"**
+5. Klicken Sie auf **"Installieren"**
+
+### ❗ Häufige Fehler
+
+**Problem**: Modul wird als "Nicht installierbar" angezeigt
+
+**Lösung**: Das gesamte Repository wurde kopiert, statt nur des `cjdropship` Ordners.
+
 ```bash
-cd /opt
-git clone https://github.com/MBadberg/odoo_cjdropship_addon.git
+# FALSCH - Modul ist zu tief verschachtelt
+/path/to/odoo/addons/odoo_cjdropship_addon/cjdropship/  ❌
+
+# RICHTIG - Modul ist direkt im addons Verzeichnis
+/path/to/odoo/addons/cjdropship/  ✅
 ```
 
-2. Erstellen Sie einen Symlink zum `cjdropship` Ordner:
-```bash
-ln -s /opt/odoo_cjdropship_addon/cjdropship /path/to/odoo/addons/cjdropship
-```
+**Lösung**: Entfernen Sie das falsch installierte Modul und führen Sie `./install.sh` aus oder kopieren Sie nur den `cjdropship` Ordner.
 
-3. Starten Sie Odoo neu:
-```bash
-./odoo-bin -c odoo.conf
-```
+---
 
-#### Modul installieren
-
-1. Aktualisieren Sie die App-Liste in Odoo:
-   - Gehen Sie zu Apps
-   - Klicken Sie auf "App-Liste aktualisieren"
-   - Suchen Sie nach "CJDropshipping Integration"
-   - Klicken Sie auf "Installieren"
+📖 **Mehr Details**: Siehe [INSTALLATION_GUIDE.md](INSTALLATION_GUIDE.md) für ausführliche Anweisungen und Fehlerbehebung.
 
 ## Konfiguration
 
