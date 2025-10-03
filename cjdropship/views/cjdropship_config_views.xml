@@ -26,7 +26,6 @@
                             </div>
                         </button>
                     </div>
-                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                     <div class="oe_title">
                         <label for="name" string="Configuration Name"/>
                         <h1>
@@ -37,7 +36,7 @@
                         <group string="API Credentials">
                             <field name="api_email"/>
                             <field name="api_password" password="True"/>
-                            <field name="active" widget="boolean_toggle"/>
+                            <field name="active"/>
                         </group>
                         <group string="Status">
                             <field name="connection_message" invisible="not connection_message"/>
@@ -99,7 +98,7 @@
                 <field name="api_email"/>
                 <field name="connection_status"/>
                 <field name="last_sync_date"/>
-                <field name="active" widget="boolean_toggle"/>
+                <field name="active"/>
             </tree>
         </field>
     </record>

@@ -10,7 +10,6 @@
                 <header>
                     <button name="action_process_webhook" string="Process Webhook" type="object" 
                         class="oe_highlight" invisible="processed"/>
-                    <field name="processed" widget="boolean_toggle"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
@@ -24,6 +23,7 @@
                             <field name="event"/>
                             <field name="cj_order_id"/>
                             <field name="order_id"/>
+                            <field name="processed"/>
                         </group>
                         <group>
                             <field name="create_date" string="Received Date"/>
@@ -32,10 +32,10 @@
                     </group>
                     <notebook>
                         <page string="Payload" name="payload">
-                            <field name="payload" widget="ace" options="{'mode': 'json'}"/>
+                            <field name="payload" widget="text"/>
                         </page>
                         <page string="Headers" name="headers">
-                            <field name="headers" widget="ace" options="{'mode': 'json'}"/>
+                            <field name="headers" widget="text"/>
                         </page>
                         <page string="Error" name="error" invisible="not error_message">
                             <field name="error_message"/>
@@ -57,7 +57,7 @@
                 <field name="cj_order_id"/>
                 <field name="order_id"/>
                 <field name="create_date" string="Received"/>
-                <field name="processed" widget="boolean_toggle"/>
+                <field name="processed"/>
                 <field name="process_date"/>
             </tree>
         </field>

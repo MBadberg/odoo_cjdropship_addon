@@ -4,6 +4,8 @@ Ein vollständiges Odoo 19 Addon für die Integration mit der CJDropshipping API
 
 > **📌 NEU: Automatische Installation!** → [START_HERE.md](START_HERE.md) für die schnellste Installation.
 
+> **✅ COMMUNITY EDITION KOMPATIBEL!** Dieses Addon funktioniert jetzt vollständig mit Odoo Community Edition 19.0. Alle Enterprise-spezifischen Widgets wurden entfernt. → [FEHLERANALYSE.md](FEHLERANALYSE.md)
+
 ---
 
 ## 🚀 Schnellstart - In 3 Schritten installieren
