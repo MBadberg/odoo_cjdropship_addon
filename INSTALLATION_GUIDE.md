@@ -1,5 +1,32 @@
 # Installation Guide - CJDropshipping Odoo 19 Addon
 
+## 🚀 Quick Start - Automated Installation
+
+**The easiest way to install this module:**
+
+```bash
+git clone https://github.com/MBadberg/odoo_cjdropship_addon.git
+cd odoo_cjdropship_addon
+./install.sh
+```
+
+The installation script will:
+- ✅ Automatically detect your Odoo installation
+- ✅ Install the module in the correct location
+- ✅ Install Python dependencies
+- ✅ Set proper permissions
+- ✅ Optionally restart Odoo
+
+**After installation, verify everything is correct:**
+
+```bash
+./verify_installation.sh
+```
+
+If you encounter any issues, this script will tell you exactly what's wrong and how to fix it.
+
+---
+
 ## ⚠️ Important: Correct Directory Structure
 
 The most common installation issue is incorrect directory structure. This module **must** be installed correctly to appear as "Installable" in Odoo.
