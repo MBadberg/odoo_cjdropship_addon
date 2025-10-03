@@ -2,6 +2,27 @@
 
 Ein vollständiges Odoo 19 Addon für die Integration mit der CJDropshipping API.
 
+---
+
+## 🚀 Schnellstart - In 3 Schritten installieren
+
+```bash
+# 1. Repository klonen
+git clone https://github.com/MBadberg/odoo_cjdropship_addon.git
+cd odoo_cjdropship_addon
+
+# 2. Automatisches Installations-Skript ausführen
+./install.sh
+
+# 3. Modul in Odoo aktivieren (Apps → App-Liste aktualisieren → "CJDropshipping Integration" installieren)
+```
+
+**Probleme bei der Installation?** Führen Sie `./verify_installation.sh` aus, um die Installation zu überprüfen.
+
+📖 **Einfache Anleitung auf Deutsch**: [INSTALLATION_EINFACH.md](INSTALLATION_EINFACH.md)
+
+---
+
 ## Features
 
 ✅ **Produktimport**: Importieren Sie Dropshipping-Produkte aus dem CJDropshipping-Katalog
