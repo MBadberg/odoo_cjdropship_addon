@@ -5,7 +5,7 @@
     'category': 'Sales/Sales',
     'summary': 'Integration with CJDropshipping API for product import and order fulfillment',
     'description': """,
-    'installable': True
+    'installable': 'True'
 CJDropshipping Integration for Odoo
 ====================================
 
