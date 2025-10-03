@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Configuration Form View -->
+    <record id="view_cjdropship_config_form" model="ir.ui.view">
+        <field name="name">cjdropship.config.form</field>
+        <field name="model">cjdropship.config</field>
+        <field name="arch" type="xml">
+            <form string="CJDropshipping Configuration">
+                <header>
+                    <button name="action_test_connection" string="Test Connection" type="object" class="oe_highlight"/>
+                    <button name="action_sync_products" string="Import Products" type="object" class="oe_highlight" 
+                        invisible="connection_status != 'connected'"/>
+                    <field name="connection_status" widget="statusbar" statusbar_visible="not_tested,connected"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" name="%(action_cjdropship_product)d" type="action" icon="fa-cubes">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Products</span>
+                            </div>
+                        </button>
+                        <button class="oe_stat_button" name="%(action_cjdropship_order)d" type="action" icon="fa-truck">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Orders</span>
+                            </div>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name" string="Configuration Name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. CJDropshipping Production"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="API Credentials">
+                            <field name="api_email"/>
+                            <field name="api_password" password="True"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Status">
+                            <field name="connection_message" invisible="not connection_message"/>
+                            <field name="last_sync_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Product Settings" name="product_settings">
+                            <group>
+                                <group string="Sync Settings">
+                                    <field name="auto_sync_products"/>
+                                    <field name="sync_interval" invisible="not auto_sync_products"/>
+                                </group>
+                                <group string="Default Values">
+                                    <field name="default_product_type"/>
+                                    <field name="default_categ_id"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Pricing">
+                                    <field name="price_markup_type"/>
+                                    <field name="price_markup"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Order Settings" name="order_settings">
+                            <group>
+                                <group string="Fulfillment">
+                                    <field name="auto_fulfill_orders"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Webhook Settings" name="webhook_settings">
+                            <group>
+                                <group>
+                                    <field name="webhook_enabled"/>
+                                    <field name="webhook_url" widget="url" readonly="1"/>
+                                </group>
+                            </group>
+                            <group>
+                                <div class="alert alert-info" role="alert">
+                                    Configure this URL in your CJDropshipping dashboard to receive status updates automatically.
+                                </div>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Configuration Tree View -->
+    <record id="view_cjdropship_config_tree" model="ir.ui.view">
+        <field name="name">cjdropship.config.tree</field>
+        <field name="model">cjdropship.config</field>
+        <field name="arch" type="xml">
+            <tree string="CJDropshipping Configurations">
+                <field name="name"/>
+                <field name="api_email"/>
+                <field name="connection_status"/>
+                <field name="last_sync_date"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Configuration Action -->
+    <record id="action_cjdropship_config" model="ir.actions.act_window">
+        <field name="name">CJDropshipping Configuration</field>
+        <field name="res_model">cjdropship.config</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure CJDropshipping Integration
+            </p>
+            <p>
+                Set up your API credentials to start importing products and fulfilling orders with CJDropshipping.
+            </p>
+        </field>
+    </record>
+
+</odoo>

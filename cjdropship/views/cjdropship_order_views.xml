@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Order Form View -->
+    <record id="view_cjdropship_order_form" model="ir.ui.view">
+        <field name="name">cjdropship.order.form</field>
+        <field name="model">cjdropship.order</field>
+        <field name="arch" type="xml">
+            <form string="CJDropshipping Order">
+                <header>
+                    <button name="action_submit_to_cj" string="Submit to CJ" type="object" 
+                        class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_update_status" string="Update Status" type="object"
+                        invisible="not cj_order_id or state in ['draft', 'error', 'cancelled']"/>
+                    <button name="action_query_logistics" string="Query Logistics" type="object"
+                        invisible="state not in ['shipped', 'delivered']"/>
+                    <field name="state" widget="statusbar" 
+                        statusbar_visible="draft,submitted,processing,shipped,delivered"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="cj_order_id" string="CJ Order ID"/>
+                        <h1>
+                            <field name="cj_order_id" placeholder="Will be assigned after submission"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Order Information">
+                            <field name="sale_order_id"/>
+                            <field name="cj_order_num"/>
+                            <field name="order_date"/>
+                            <field name="config_id"/>
+                        </group>
+                        <group string="Shipping">
+                            <field name="shipping_method"/>
+                            <field name="shipping_cost"/>
+                            <field name="tracking_number"/>
+                            <field name="last_logistics_update"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                        <page string="Error Message" name="error" invisible="state != 'error'">
+                            <field name="error_message" readonly="1"/>
+                        </page>
+                        <page string="Logistics Info" name="logistics" invisible="not logistics_info">
+                            <field name="logistics_info" widget="text"/>
+                        </page>
+                        <page string="Request Data" name="request" invisible="not request_data">
+                            <field name="request_data" widget="ace" options="{'mode': 'json'}"/>
+                        </page>
+                        <page string="Response Data" name="response" invisible="not response_data">
+                            <field name="response_data" widget="ace" options="{'mode': 'json'}"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Order Tree View -->
+    <record id="view_cjdropship_order_tree" model="ir.ui.view">
+        <field name="name">cjdropship.order.tree</field>
+        <field name="model">cjdropship.order</field>
+        <field name="arch" type="xml">
+            <tree string="CJDropshipping Orders" decoration-info="state == 'draft'" 
+                decoration-success="state == 'delivered'" decoration-danger="state == 'error'">
+                <field name="cj_order_id"/>
+                <field name="cj_order_num"/>
+                <field name="sale_order_id"/>
+                <field name="order_date"/>
+                <field name="state" widget="badge" 
+                    decoration-info="state == 'draft'" 
+                    decoration-warning="state == 'processing'"
+                    decoration-success="state in ['shipped', 'delivered']"/>
+                <field name="tracking_number"/>
+                <field name="shipping_cost"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Order Search View -->
+    <record id="view_cjdropship_order_search" model="ir.ui.view">
+        <field name="name">cjdropship.order.search</field>
+        <field name="model">cjdropship.order</field>
+        <field name="arch" type="xml">
+            <search string="Search CJDropshipping Orders">
+                <field name="cj_order_id"/>
+                <field name="cj_order_num"/>
+                <field name="sale_order_id"/>
+                <field name="tracking_number"/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Submitted" name="submitted" domain="[('state', '=', 'submitted')]"/>
+                <filter string="Processing" name="processing" domain="[('state', '=', 'processing')]"/>
+                <filter string="Shipped" name="shipped" domain="[('state', '=', 'shipped')]"/>
+                <filter string="Delivered" name="delivered" domain="[('state', '=', 'delivered')]"/>
+                <filter string="Error" name="error" domain="[('state', '=', 'error')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Order Date" name="group_date" context="{'group_by': 'order_date'}"/>
+                    <filter string="Configuration" name="group_config" context="{'group_by': 'config_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    
+    <!-- Order Action -->
+    <record id="action_cjdropship_order" model="ir.actions.act_window">
+        <field name="name">CJDropshipping Orders</field>
+        <field name="res_model">cjdropship.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No CJDropshipping orders yet
+            </p>
+            <p>
+                Orders containing CJDropshipping products will appear here.
+            </p>
+        </field>
+    </record>
+    
+    <!-- Sale Order Form View Inherit -->
+    <record id="view_order_form_inherit_cjdropship" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.cjdropship</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" name="action_view_cjdropship_order" type="object" 
+                    icon="fa-truck" invisible="not is_cjdropship_order or not cjdropship_order_id">
+                    <div class="o_stat_info">
+                        <field name="cjdropship_state" widget="badge"/>
+                        <span class="o_stat_text">CJ Order</span>
+                    </div>
+                </button>
+                <field name="is_cjdropship_order" invisible="1"/>
+                <field name="cjdropship_order_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <field name="is_cjdropship_order" invisible="1"/>
+                <button name="action_submit_to_cjdropship" string="Submit to CJDropshipping" 
+                    type="object" class="btn-primary" 
+                    invisible="not is_cjdropship_order or cjdropship_order_id or state != 'sale'"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

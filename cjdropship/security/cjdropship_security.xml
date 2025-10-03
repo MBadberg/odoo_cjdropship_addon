@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- CJDropshipping Category -->
+    <record id="module_category_cjdropship" model="ir.module.category">
+        <field name="name">CJDropshipping</field>
+        <field name="description">Manage CJDropshipping Integration</field>
+        <field name="sequence">20</field>
+    </record>
+    
+    <!-- CJDropshipping User Group -->
+    <record id="group_cjdropship_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_cjdropship"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    
+    <!-- CJDropshipping Manager Group -->
+    <record id="group_cjdropship_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_cjdropship"/>
+        <field name="implied_ids" eval="[(4, ref('group_cjdropship_user'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+    
+    <!-- Record Rules -->
+    <record id="cjdropship_config_rule" model="ir.rule">
+        <field name="name">CJDropshipping Config: All</field>
+        <field name="model_id" ref="model_cjdropship_config"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_cjdropship_user'))]"/>
+    </record>
+    
+    <record id="cjdropship_product_rule" model="ir.rule">
+        <field name="name">CJDropshipping Product: All</field>
+        <field name="model_id" ref="model_cjdropship_product"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_cjdropship_user'))]"/>
+    </record>
+    
+    <record id="cjdropship_order_rule" model="ir.rule">
+        <field name="name">CJDropshipping Order: All</field>
+        <field name="model_id" ref="model_cjdropship_order"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_cjdropship_user'))]"/>
+    </record>
+    
+    <record id="cjdropship_webhook_rule" model="ir.rule">
+        <field name="name">CJDropshipping Webhook: All</field>
+        <field name="model_id" ref="model_cjdropship_webhook"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_cjdropship_user'))]"/>
+    </record>
+
+</odoo>
