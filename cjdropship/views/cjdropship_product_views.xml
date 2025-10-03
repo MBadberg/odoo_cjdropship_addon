@@ -11,7 +11,6 @@
                     <button name="action_create_odoo_product" string="Create/Update Odoo Product" 
                         type="object" class="oe_highlight"/>
                     <button name="action_sync_from_cj" string="Sync from CJ" type="object"/>
-                    <field name="active" widget="boolean_toggle"/>
                 </header>
                 <sheet>
                     <field name="image_url" widget="image" class="oe_avatar"/>
@@ -28,6 +27,7 @@
                             <field name="cj_variant_id"/>
                             <field name="category_name"/>
                             <field name="config_id"/>
+                            <field name="active"/>
                         </group>
                         <group string="Pricing">
                             <field name="cj_price" widget="monetary"/>
@@ -79,7 +79,7 @@
                 <field name="cj_stock_qty"/>
                 <field name="product_tmpl_id"/>
                 <field name="sync_date"/>
-                <field name="active" widget="boolean_toggle"/>
+                <field name="active"/>
             </tree>
         </field>
     </record>

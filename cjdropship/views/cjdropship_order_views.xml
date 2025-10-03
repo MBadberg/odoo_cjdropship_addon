@@ -49,10 +49,10 @@
                             <field name="logistics_info" widget="text"/>
                         </page>
                         <page string="Request Data" name="request" invisible="not request_data">
-                            <field name="request_data" widget="ace" options="{'mode': 'json'}"/>
+                            <field name="request_data" widget="text"/>
                         </page>
                         <page string="Response Data" name="response" invisible="not response_data">
-                            <field name="response_data" widget="ace" options="{'mode': 'json'}"/>
+                            <field name="response_data" widget="text"/>
                         </page>
                     </notebook>
                 </sheet>
@@ -75,10 +75,7 @@
                 <field name="cj_order_num"/>
                 <field name="sale_order_id"/>
                 <field name="order_date"/>
-                <field name="state" widget="badge" 
-                    decoration-info="state == 'draft'" 
-                    decoration-warning="state == 'processing'"
-                    decoration-success="state in ['shipped', 'delivered']"/>
+                <field name="state"/>
                 <field name="tracking_number"/>
                 <field name="shipping_cost"/>
             </tree>
@@ -135,7 +132,7 @@
                 <button class="oe_stat_button" name="action_view_cjdropship_order" type="object" 
                     icon="fa-truck" invisible="not is_cjdropship_order or not cjdropship_order_id">
                     <div class="o_stat_info">
-                        <field name="cjdropship_state" widget="badge"/>
+                        <field name="cjdropship_state"/>
                         <span class="o_stat_text">CJ Order</span>
                     </div>
                 </button>
