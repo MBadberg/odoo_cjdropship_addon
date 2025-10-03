@@ -96,9 +96,18 @@ rm -rf /path/to/odoo/addons/odoo_cjdropship_addon
 **Fehlermeldung**: "No module named 'requests'"
 
 **Lösung**:
+
+Das Installations-Skript installiert die Bibliothek automatisch. Falls eine manuelle Installation nötig ist:
+
 ```bash
+# Option 1: Mit pip3 (bevorzugt)
 pip3 install requests
+
+# Option 2: Mit apt (wenn pip3 nicht installiert ist)
+sudo apt install python3-requests
 ```
+
+**Hinweis**: Das `install.sh` Skript versucht automatisch beide Methoden und wählt die funktionierende aus.
 
 Dann Odoo neu starten.
 

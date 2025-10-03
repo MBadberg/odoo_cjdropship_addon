@@ -133,8 +133,18 @@ sudo systemctl restart odoo
 ### Ursache: Python-Abhängigkeit fehlt
 
 **Lösung**:
+
+Das `install.sh` Skript installiert die Abhängigkeit automatisch. Falls es manuell installiert werden muss:
+
 ```bash
+# Methode 1: Mit pip3 (bevorzugt)
 pip3 install requests
+
+# Methode 2: Mit apt (wenn pip3 nicht verfügbar)
+sudo apt install python3-requests
+
+# Methode 3: Mit yum (für RedHat/CentOS)
+sudo yum install python3-requests
 
 # Odoo neu starten
 sudo systemctl restart odoo
@@ -145,6 +155,10 @@ sudo systemctl restart odoo
 source /path/to/venv/bin/activate
 pip install requests
 ```
+
+**Hinweis**: Das Installations-Skript (`./install.sh`) versucht automatisch:
+1. `requests` mit pip3 zu installieren
+2. Falls pip3 nicht verfügbar ist: `python3-requests` mit apt zu installieren
 
 ---
 

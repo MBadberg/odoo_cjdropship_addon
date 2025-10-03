@@ -241,13 +241,24 @@ No module named 'requests'
 ```
 
 **Solution:**
+
+The `install.sh` script handles this automatically. For manual installation:
+
 ```bash
-# Install Python dependencies
+# Method 1: Using pip3 (preferred)
 pip3 install requests
+
+# Method 2: Using apt (if pip3 is not available)
+sudo apt install python3-requests
+
+# Method 3: Using yum (RedHat/CentOS)
+sudo yum install python3-requests
 
 # Restart Odoo
 sudo systemctl restart odoo
 ```
+
+**Note**: The installation script automatically tries pip3 first, then falls back to apt if pip3 is not available.
 
 ### Problem: Database Error During Installation
 
