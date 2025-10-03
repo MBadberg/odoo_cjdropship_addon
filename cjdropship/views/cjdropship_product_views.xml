@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Product Form View -->
+    <record id="view_cjdropship_product_form" model="ir.ui.view">
+        <field name="name">cjdropship.product.form</field>
+        <field name="model">cjdropship.product</field>
+        <field name="arch" type="xml">
+            <form string="CJDropshipping Product">
+                <header>
+                    <button name="action_create_odoo_product" string="Create/Update Odoo Product" 
+                        type="object" class="oe_highlight"/>
+                    <button name="action_sync_from_cj" string="Sync from CJ" type="object"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </header>
+                <sheet>
+                    <field name="image_url" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="cj_product_name" string="Product Name"/>
+                        <h1>
+                            <field name="cj_product_name" placeholder="Product Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="CJDropshipping Info">
+                            <field name="cj_product_id"/>
+                            <field name="cj_product_sku"/>
+                            <field name="cj_variant_id"/>
+                            <field name="category_name"/>
+                            <field name="config_id"/>
+                        </group>
+                        <group string="Pricing">
+                            <field name="cj_price" widget="monetary"/>
+                            <field name="selling_price" widget="monetary"/>
+                            <field name="cj_stock_qty"/>
+                        </group>
+                    </group>
+                    <group string="Shipping Information">
+                        <group>
+                            <field name="shipping_weight"/>
+                        </group>
+                        <group>
+                            <field name="shipping_length"/>
+                            <field name="shipping_width"/>
+                            <field name="shipping_height"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Odoo Integration">
+                            <field name="product_tmpl_id"/>
+                            <field name="sync_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description"/>
+                        </page>
+                        <page string="Additional Images" name="images">
+                            <field name="image_urls"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Product Tree View -->
+    <record id="view_cjdropship_product_tree" model="ir.ui.view">
+        <field name="name">cjdropship.product.tree</field>
+        <field name="model">cjdropship.product</field>
+        <field name="arch" type="xml">
+            <tree string="CJDropshipping Products">
+                <field name="cj_product_id"/>
+                <field name="cj_product_name"/>
+                <field name="cj_product_sku"/>
+                <field name="category_name"/>
+                <field name="cj_price"/>
+                <field name="selling_price"/>
+                <field name="cj_stock_qty"/>
+                <field name="product_tmpl_id"/>
+                <field name="sync_date"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Product Search View -->
+    <record id="view_cjdropship_product_search" model="ir.ui.view">
+        <field name="name">cjdropship.product.search</field>
+        <field name="model">cjdropship.product</field>
+        <field name="arch" type="xml">
+            <search string="Search CJDropshipping Products">
+                <field name="cj_product_name"/>
+                <field name="cj_product_id"/>
+                <field name="cj_product_sku"/>
+                <field name="category_name"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter string="With Odoo Product" name="with_odoo_product" 
+                    domain="[('product_tmpl_id', '!=', False)]"/>
+                <filter string="Without Odoo Product" name="without_odoo_product" 
+                    domain="[('product_tmpl_id', '=', False)]"/>
+                <separator/>
+                <filter string="In Stock" name="in_stock" domain="[('cj_stock_qty', '>', 0)]"/>
+                <filter string="Out of Stock" name="out_of_stock" domain="[('cj_stock_qty', '=', 0)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Category" name="group_category" context="{'group_by': 'category_name'}"/>
+                    <filter string="Configuration" name="group_config" context="{'group_by': 'config_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    
+    <!-- Product Action -->
+    <record id="action_cjdropship_product" model="ir.actions.act_window">
+        <field name="name">CJDropshipping Products</field>
+        <field name="res_model">cjdropship.product</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No CJDropshipping products found
+            </p>
+            <p>
+                Import products from CJDropshipping to start selling.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cjdropship_config_user,cjdropship.config.user,model_cjdropship_config,group_cjdropship_user,1,0,0,0
+access_cjdropship_config_manager,cjdropship.config.manager,model_cjdropship_config,group_cjdropship_manager,1,1,1,1
+access_cjdropship_product_user,cjdropship.product.user,model_cjdropship_product,group_cjdropship_user,1,1,1,0
+access_cjdropship_product_manager,cjdropship.product.manager,model_cjdropship_product,group_cjdropship_manager,1,1,1,1
+access_cjdropship_order_user,cjdropship.order.user,model_cjdropship_order,group_cjdropship_user,1,1,1,0
+access_cjdropship_order_manager,cjdropship.order.manager,model_cjdropship_order,group_cjdropship_manager,1,1,1,1
+access_cjdropship_webhook_user,cjdropship.webhook.user,model_cjdropship_webhook,group_cjdropship_user,1,0,0,0
+access_cjdropship_webhook_manager,cjdropship.webhook.manager,model_cjdropship_webhook,group_cjdropship_manager,1,1,1,1
+access_cjdropship_product_import_wizard_user,cjdropship.product.import.wizard.user,model_cjdropship_product_import_wizard,group_cjdropship_user,1,1,1,1
+access_cjdropship_product_import_wizard_manager,cjdropship.product.import.wizard.manager,model_cjdropship_product_import_wizard,group_cjdropship_manager,1,1,1,1
