@@ -105,6 +105,142 @@ detect_odoo() {
     print_success "Odoo addons path: $ODOO_ADDONS_PATH"
 }
 
+# Uninstall module from Odoo if already installed
+uninstall_from_odoo() {
+    print_header "Checking for Existing Module Installation"
+    
+    # Try to find odoo-bin
+    ODOO_BIN=""
+    POSSIBLE_ODOO_BINS=(
+        "/opt/odoo/odoo-bin"
+        "/usr/bin/odoo"
+        "/usr/local/bin/odoo"
+        "$HOME/odoo/odoo-bin"
+    )
+    
+    for bin in "${POSSIBLE_ODOO_BINS[@]}"; do
+        if [ -f "$bin" ]; then
+            ODOO_BIN="$bin"
+            break
+        fi
+    done
+    
+    # Try to find odoo.conf
+    ODOO_CONF=""
+    POSSIBLE_CONFIGS=(
+        "/etc/odoo/odoo.conf"
+        "/opt/odoo/odoo.conf"
+        "$HOME/odoo/odoo.conf"
+    )
+    
+    for conf in "${POSSIBLE_CONFIGS[@]}"; do
+        if [ -f "$conf" ]; then
+            ODOO_CONF="$conf"
+            break
+        fi
+    done
+    
+    # Check if module is installed in Odoo
+    if [ -n "$ODOO_BIN" ] && [ -n "$ODOO_CONF" ]; then
+        print_info "Checking if module is already installed in Odoo..."
+        
+        # Try to check module installation status
+        MODULE_INSTALLED=$(python3 -c "
+try:
+    import psycopg2
+    import configparser
+    
+    config = configparser.ConfigParser()
+    config.read('$ODOO_CONF')
+    
+    db_name = config.get('options', 'db_name', fallback=None)
+    if not db_name:
+        # Try to get first database
+        db_host = config.get('options', 'db_host', fallback='localhost')
+        db_port = config.get('options', 'db_port', fallback='5432')
+        db_user = config.get('options', 'db_user', fallback='odoo')
+        db_password = config.get('options', 'db_password', fallback='odoo')
+        
+        conn = psycopg2.connect(host=db_host, port=db_port, user=db_user, password=db_password, dbname='postgres')
+        cur = conn.cursor()
+        cur.execute(\"SELECT datname FROM pg_database WHERE datistemplate = false AND datname NOT IN ('postgres') ORDER BY datname LIMIT 1\")
+        result = cur.fetchone()
+        if result:
+            db_name = result[0]
+        cur.close()
+        conn.close()
+    
+    if db_name:
+        db_host = config.get('options', 'db_host', fallback='localhost')
+        db_port = config.get('options', 'db_port', fallback='5432')
+        db_user = config.get('options', 'db_user', fallback='odoo')
+        db_password = config.get('options', 'db_password', fallback='odoo')
+        
+        conn = psycopg2.connect(host=db_host, port=db_port, user=db_user, password=db_password, dbname=db_name)
+        cur = conn.cursor()
+        cur.execute(\"SELECT state FROM ir_module_module WHERE name='cjdropship'\")
+        result = cur.fetchone()
+        if result and result[0] == 'installed':
+            print('installed')
+        cur.close()
+        conn.close()
+except Exception as e:
+    pass
+" 2>/dev/null)
+        
+        if [ "$MODULE_INSTALLED" = "installed" ]; then
+            print_warning "Module is currently installed in Odoo database."
+            read -p "Do you want to uninstall it from Odoo before reinstalling? (y/N): " -n 1 -r
+            echo
+            if [[ $REPLY =~ ^[Yy]$ ]]; then
+                print_info "Uninstalling module from Odoo..."
+                
+                # Get database name from config
+                DB_NAME=$(python3 -c "
+try:
+    import configparser
+    config = configparser.ConfigParser()
+    config.read('$ODOO_CONF')
+    db_name = config.get('options', 'db_name', fallback='')
+    if db_name:
+        print(db_name)
+    else:
+        import psycopg2
+        db_host = config.get('options', 'db_host', fallback='localhost')
+        db_port = config.get('options', 'db_port', fallback='5432')
+        db_user = config.get('options', 'db_user', fallback='odoo')
+        db_password = config.get('options', 'db_password', fallback='odoo')
+        conn = psycopg2.connect(host=db_host, port=db_port, user=db_user, password=db_password, dbname='postgres')
+        cur = conn.cursor()
+        cur.execute(\"SELECT datname FROM pg_database WHERE datistemplate = false AND datname NOT IN ('postgres') ORDER BY datname LIMIT 1\")
+        result = cur.fetchone()
+        if result:
+            print(result[0])
+        cur.close()
+        conn.close()
+except:
+    pass
+" 2>/dev/null)
+                
+                if [ -n "$DB_NAME" ]; then
+                    sudo -u odoo "$ODOO_BIN" -c "$ODOO_CONF" -d "$DB_NAME" -u cjdropship --uninstall 2>/dev/null || \
+                    "$ODOO_BIN" -c "$ODOO_CONF" -d "$DB_NAME" -u cjdropship --uninstall 2>/dev/null || \
+                    print_warning "Could not automatically uninstall. Please uninstall manually from Odoo UI."
+                    
+                    print_success "Module uninstalled from Odoo"
+                else
+                    print_warning "Could not determine database name. Please uninstall manually from Odoo UI."
+                fi
+            fi
+        else
+            print_info "Module is not currently installed in Odoo."
+        fi
+    else
+        print_info "Could not detect Odoo installation for automatic uninstall check."
+        print_info "If module is already installed in Odoo, please uninstall it manually before proceeding."
+    fi
+}
+
 # Install module
 install_module() {
     print_header "Installing CJDropshipping Module"
@@ -152,13 +288,55 @@ install_module() {
 install_dependencies() {
     print_header "Installing Python Dependencies"
     
+    # Check if requests is already installed
+    if python3 -c "import requests" 2>/dev/null; then
+        print_success "requests library is already installed"
+        return 0
+    fi
+    
+    # Try pip3 first
     if command -v pip3 &> /dev/null; then
-        print_info "Installing requests library..."
-        pip3 install requests --quiet || print_warning "Failed to install requests (may need sudo)"
-        print_success "Dependencies installed"
+        print_info "Installing requests library with pip3..."
+        if pip3 install requests --quiet 2>/dev/null; then
+            print_success "Dependencies installed with pip3"
+            return 0
+        elif sudo pip3 install requests --quiet 2>/dev/null; then
+            print_success "Dependencies installed with pip3 (sudo)"
+            return 0
+        else
+            print_warning "Failed to install with pip3, trying alternative methods..."
+        fi
     else
-        print_warning "pip3 not found. Please install 'requests' manually:"
-        echo "  pip3 install requests"
+        print_warning "pip3 not found."
+    fi
+    
+    # Fallback to apt install if pip3 failed or is not available
+    if command -v apt &> /dev/null || command -v apt-get &> /dev/null; then
+        print_info "Attempting to install python3-requests via apt..."
+        
+        if sudo apt update -qq 2>/dev/null && sudo apt install -y python3-requests -qq 2>/dev/null; then
+            print_success "Dependencies installed with apt (python3-requests)"
+            return 0
+        else
+            print_warning "Failed to install with apt (may need sudo or internet connection)"
+        fi
+    fi
+    
+    # If all methods failed
+    print_error "Could not install 'requests' library automatically."
+    echo ""
+    print_info "Please install it manually using one of these methods:"
+    echo "  1. pip3 install requests"
+    echo "  2. sudo pip3 install requests"
+    echo "  3. sudo apt install python3-requests"
+    echo "  4. sudo yum install python3-requests (for RedHat/CentOS)"
+    echo ""
+    
+    read -p "Do you want to continue anyway? (y/N): " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        print_info "Installation cancelled."
+        exit 1
     fi
 }
 
@@ -256,6 +434,7 @@ main() {
     
     check_directory
     detect_odoo
+    uninstall_from_odoo
     install_module
     install_dependencies
     set_permissions
