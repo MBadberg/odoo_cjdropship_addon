@@ -4,8 +4,7 @@
     'version': '19.0.1.0.0',
     'category': 'Sales/Sales',
     'summary': 'Integration with CJDropshipping API for product import and order fulfillment',
-    'description': """,
-    'installable': 'True'
+    'description': """
 CJDropshipping Integration for Odoo
 ====================================
 

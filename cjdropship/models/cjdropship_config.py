@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
+import logging
+
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
+
 from .cjdropship_api import CJDropshippingAPI
-import logging
 
 _logger = logging.getLogger(__name__)
 
