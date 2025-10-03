@@ -13,6 +13,10 @@ Ein vollständiges Odoo 19 Addon für die Integration mit der CJDropshipping API
 
 ## Installation
 
+⚠️ **Wichtig**: Nur der `cjdropship` Ordner muss ins Addons-Verzeichnis, nicht das gesamte Repository!
+
+📖 **Detaillierte Anleitung**: Siehe [INSTALLATION_GUIDE.md](INSTALLATION_GUIDE.md) für ausführliche Installationsanweisungen und Fehlerbehebung.
+
 ### Voraussetzungen
 
 - Odoo 19.0
@@ -20,9 +24,7 @@ Ein vollständiges Odoo 19 Addon für die Integration mit der CJDropshipping API
 - `requests` Python-Bibliothek
 - Aktives CJDropshipping-Konto mit API-Zugang
 
-### Installationsschritte
-
-**Wichtig**: Nur der `cjdropship` Ordner muss ins Addons-Verzeichnis, nicht das gesamte Repository!
+### Schnellinstallation
 
 #### Option 1: Direktes Klonen ins Addons-Verzeichnis (Empfohlen)
 
