@@ -10,11 +10,17 @@ Get up and running with CJDropshipping integration in 10 minutes!
 
 ## Installation (5 minutes)
 
-### Step 1: Clone Repository
+⚠️ **Important**: Only the `cjdropship` folder needs to be in the addons directory, not the entire repository!
+
+### Step 1: Clone and Copy Module
 
 ```bash
-cd /path/to/odoo/addons
+# Clone the repository
+cd /tmp
 git clone https://github.com/MBadberg/odoo_cjdropship_addon.git
+
+# Copy only the cjdropship folder to Odoo addons
+cp -r odoo_cjdropship_addon/cjdropship /path/to/odoo/addons/
 ```
 
 ### Step 2: Install Dependencies
@@ -26,7 +32,7 @@ pip3 install requests
 ### Step 3: Restart Odoo
 
 ```bash
-./odoo-bin -c odoo.conf --addons-path=/path/to/odoo/addons
+./odoo-bin -c odoo.conf
 ```
 
 ### Step 4: Install Module
@@ -35,6 +41,8 @@ pip3 install requests
 2. Click **Update Apps List**
 3. Search for **"CJDropshipping Integration"**
 4. Click **Install**
+
+💡 **Tip**: If the module shows as "Not installable", make sure only the `cjdropship` folder (not `odoo_cjdropship_addon`) is in your addons directory.
 
 ## Configuration (3 minutes)
 
@@ -169,6 +177,24 @@ Select order > Query Logistics
 ```
 
 ## Troubleshooting Quick Fixes
+
+### ❌ Module Shows "Not Installable"
+
+**Solution:**
+1. Verify directory structure:
+   ```
+   /path/to/odoo/addons/
+   └── cjdropship/          ← Should be here
+       ├── __init__.py
+       ├── __manifest__.py
+       └── ...
+   ```
+2. Remove parent folder if present:
+   ```bash
+   rm -rf /path/to/odoo/addons/odoo_cjdropship_addon
+   cp -r /path/to/odoo_cjdropship_addon/cjdropship /path/to/odoo/addons/
+   ```
+3. Restart Odoo and update apps list
 
 ### ❌ Connection Failed
 

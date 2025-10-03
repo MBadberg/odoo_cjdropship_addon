@@ -22,18 +22,47 @@ Ein vollständiges Odoo 19 Addon für die Integration mit der CJDropshipping API
 
 ### Installationsschritte
 
-1. Klonen Sie das Repository in Ihr Odoo-Addons-Verzeichnis:
+**Wichtig**: Nur der `cjdropship` Ordner muss ins Addons-Verzeichnis, nicht das gesamte Repository!
+
+#### Option 1: Direktes Klonen ins Addons-Verzeichnis (Empfohlen)
+
+1. Klonen Sie das Repository:
 ```bash
-cd /path/to/odoo/addons
+cd /tmp
 git clone https://github.com/MBadberg/odoo_cjdropship_addon.git
 ```
 
-2. Starten Sie Odoo mit dem Addon-Pfad:
+2. Kopieren Sie nur den `cjdropship` Ordner in Ihr Odoo-Addons-Verzeichnis:
 ```bash
-./odoo-bin -c odoo.conf --addons-path=/path/to/odoo/addons,/path/to/odoo_cjdropship_addon
+cp -r odoo_cjdropship_addon/cjdropship /path/to/odoo/addons/
 ```
 
-3. Aktualisieren Sie die App-Liste in Odoo:
+3. Starten Sie Odoo neu:
+```bash
+./odoo-bin -c odoo.conf
+```
+
+#### Option 2: Symlink erstellen
+
+1. Klonen Sie das Repository an einen beliebigen Ort:
+```bash
+cd /opt
+git clone https://github.com/MBadberg/odoo_cjdropship_addon.git
+```
+
+2. Erstellen Sie einen Symlink zum `cjdropship` Ordner:
+```bash
+ln -s /opt/odoo_cjdropship_addon/cjdropship /path/to/odoo/addons/cjdropship
+```
+
+3. Starten Sie Odoo neu:
+```bash
+./odoo-bin -c odoo.conf
+```
+
+#### Modul installieren
+
+1. Aktualisieren Sie die App-Liste in Odoo:
    - Gehen Sie zu Apps
    - Klicken Sie auf "App-Liste aktualisieren"
    - Suchen Sie nach "CJDropshipping Integration"
@@ -174,6 +203,32 @@ Das Addon implementiert zwei Benutzergruppen:
 - **CJDropshipping Manager**: Vollzugriff inklusive Konfiguration und Löschen von Datensätzen
 
 ## Fehlerbehebung
+
+### Modul wird als "Nicht installierbar" angezeigt
+
+**Problem**: Das Modul erscheint in der App-Liste, zeigt aber den Status "Nicht installierbar".
+
+**Lösung**: 
+1. Stellen Sie sicher, dass nur der `cjdropship` Ordner im Addons-Verzeichnis liegt, nicht das gesamte Repository
+2. Die Verzeichnisstruktur sollte sein:
+   ```
+   /path/to/odoo/addons/
+   └── cjdropship/
+       ├── __init__.py
+       ├── __manifest__.py
+       ├── models/
+       ├── views/
+       └── ...
+   ```
+3. **NICHT** so:
+   ```
+   /path/to/odoo/addons/
+   └── odoo_cjdropship_addon/
+       └── cjdropship/
+           ├── __init__.py
+           └── ...
+   ```
+4. Starten Sie Odoo neu und aktualisieren Sie die App-Liste
 
 ### Verbindung fehlgeschlagen
 - Überprüfen Sie Ihre API-Zugangsdaten
