@@ -104,7 +104,7 @@ All models are:
 - ✅ Referenced in CSV access control files
 - ✅ Validated with multiple methods
 
-The module should install successfully in Odoo 19.0 Community Edition.
+The module should install successfully in Odoo 19.0 and 19.1 Community Edition (including alpha versions).
 
 ## Files Added
 

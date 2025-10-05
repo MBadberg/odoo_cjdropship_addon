@@ -4,7 +4,7 @@ Get up and running with CJDropshipping integration in 10 minutes!
 
 ## Prerequisites
 
-- ✅ Odoo 19.0 installed
+- ✅ Odoo 19.0 or 19.1 (Community Edition, including alpha versions) installed
 - ✅ CJDropshipping account with API access
 - ✅ Python `requests` library installed
 

@@ -10,6 +10,12 @@ CJDropshipping Integration for Odoo
 
 This module provides complete integration with CJDropshipping API:
 
+Compatibility:
+--------------
+* Odoo 19.0 Community Edition
+* Odoo 19.1 Community Edition (including alpha versions)
+* No Enterprise Edition features required
+
 Features:
 ---------
 * Import dropshipping products from CJDropshipping catalog

@@ -138,7 +138,7 @@ python3 verify_models_simple.py
 
 The CJDropshipping Odoo module is **correctly structured** with all required models properly defined. The module should:
 
-- ✅ Install successfully in Odoo 19.0 Community Edition
+- ✅ Install successfully in Odoo 19.0 and 19.1 Community Edition (including alpha versions)
 - ✅ Load all models without errors
 - ✅ Display all views correctly
 - ✅ Apply access rights properly
@@ -191,7 +191,7 @@ The external analysis that reported missing models was **incorrect**. All 5 mode
 
 If you encounter any issues during installation:
 
-1. Ensure you're using Odoo 19.0 Community Edition
+1. Ensure you're using Odoo 19.0 or 19.1 Community Edition (including alpha versions)
 2. Verify all dependencies are installed: `base`, `sale_management`, `stock`, `product`
 3. Check Odoo logs for specific error messages
 4. Run the verification scripts to confirm module structure

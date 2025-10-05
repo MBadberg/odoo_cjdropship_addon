@@ -193,9 +193,9 @@ All core features work identically in Community Edition as they would in Enterpr
 
 These changes make the addon compatible with:
 
-- ✅ Odoo Community Edition 19.0
+- ✅ Odoo Community Edition 19.0 and 19.1 (including alpha versions)
 - ✅ Odoo Community Edition 18.0 (likely)
 - ✅ Odoo Community Edition 17.0 (with minor adjustments)
-- ✅ Odoo Enterprise Edition 19.0 (backwards compatible)
+- ✅ Odoo Enterprise Edition 19.0 and 19.1 (backwards compatible)
 
 The addon uses only standard Odoo widgets that have been available since Odoo 10.0.

@@ -2,7 +2,7 @@
 
 ## 🎯 Problem gelöst!
 
-Das CJDropshipping Addon funktioniert jetzt **vollständig mit Odoo Community Edition 19.0**.
+Das CJDropshipping Addon funktioniert jetzt **vollständig mit Odoo Community Edition 19.0 und 19.1 (inkl. Alpha-Versionen)**.
 
 ## ❓ Was war das Problem?
 
@@ -176,6 +176,6 @@ Durch den Austausch von 13 Widgets ist das Addon jetzt vollständig Community Ed
 
 ---
 
-**Version:** 19.0.1.0.0 (Community Edition kompatibel)  
+**Version:** 19.0.1.0.0 (Community Edition kompatibel für Odoo 19.0 und 19.1)  
 **Datum:** 2024  
 **Status:** ✅ Vollständig getestet und funktionsfähig

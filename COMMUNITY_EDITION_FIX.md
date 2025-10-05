@@ -75,7 +75,7 @@ The module only depends on standard Community Edition modules:
 
 ## Result
 
-The addon is now **fully compatible with Odoo Community Edition 19.0** and should install and function correctly without requiring Enterprise features.
+The addon is now **fully compatible with Odoo Community Edition 19.0 and 19.1 (including alpha versions)** and should install and function correctly without requiring Enterprise features.
 
 ## Testing Instructions
 
@@ -111,7 +111,7 @@ Both modules now:
 ## Support
 
 If you encounter any issues after this fix, please ensure:
-1. You're running Odoo Community Edition 19.0
+1. You're running Odoo Community Edition 19.0 or 19.1 (including alpha versions)
 2. All dependencies are installed (`requests` Python package)
 3. The module is in the correct addons path
 4. Odoo has been restarted after installation
