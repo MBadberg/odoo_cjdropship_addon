@@ -247,18 +247,12 @@ install_module() {
     
     MODULE_TARGET="$ODOO_ADDONS_PATH/cjdropship"
     
-    # Check if module already exists
+    # Always remove existing module if it exists (no confirmation needed)
     if [ -d "$MODULE_TARGET" ] || [ -L "$MODULE_TARGET" ]; then
         print_warning "Module already exists at: $MODULE_TARGET"
-        read -p "Do you want to overwrite it? (y/N): " -n 1 -r
-        echo
-        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-            print_info "Installation cancelled."
-            exit 0
-        fi
-        
         print_info "Removing existing module..."
         rm -rf "$MODULE_TARGET"
+        print_success "Existing module removed"
     fi
     
     # Choose installation method
@@ -346,24 +340,13 @@ set_permissions() {
     
     MODULE_TARGET="$ODOO_ADDONS_PATH/cjdropship"
     
-    # Detect Odoo user
-    ODOO_USER=""
-    if id "odoo" &>/dev/null; then
-        ODOO_USER="odoo"
-    elif id "openerp" &>/dev/null; then
-        ODOO_USER="openerp"
-    fi
-    
-    if [ -n "$ODOO_USER" ]; then
-        read -p "Set ownership to '$ODOO_USER' user? (y/N): " -n 1 -r
-        echo
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-            print_info "Setting ownership to $ODOO_USER..."
-            sudo chown -R "$ODOO_USER:$ODOO_USER" "$MODULE_TARGET" || print_warning "Failed to set ownership (may need sudo)"
-            print_success "Permissions set"
-        fi
+    # Set ownership to root user
+    print_info "Setting ownership to root..."
+    if sudo chown -R root:root "$MODULE_TARGET" 2>/dev/null; then
+        print_success "Permissions set to root:root"
     else
-        print_warning "Odoo user not detected. Please set permissions manually if needed."
+        print_warning "Failed to set ownership to root (may need sudo)"
+        print_info "You can manually set permissions with: sudo chown -R root:root $MODULE_TARGET"
     fi
 }
 
