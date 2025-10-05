@@ -2,13 +2,11 @@
 
 Ein vollständiges Odoo 19 Addon für die Integration mit der CJDropshipping API.
 
-> **📌 NEU: Automatische Installation!** → [START_HERE.md](START_HERE.md) für die schnellste Installation.
+> **✅ COMMUNITY EDITION KOMPATIBEL!** Dieses Addon funktioniert vollständig mit Odoo Community Edition 19.0 und 19.1 (inkl. alpha). Alle Enterprise-spezifischen Widgets wurden entfernt.
 
-> **✅ COMMUNITY EDITION KOMPATIBEL!** Dieses Addon funktioniert jetzt vollständig mit Odoo Community Edition 19.0 und 19.1 (inkl. alpha). Alle Enterprise-spezifischen Widgets wurden entfernt. → [FEHLERANALYSE.md](FEHLERANALYSE.md)
+> **✅ ODOO 19.1 ALPHA UNTERSTÜTZT!** Vollständige Kompatibilität mit Odoo 19.1 Alpha-Versionen (z.B. 19.1a1-20251003) bestätigt.
 
-> **✅ ODOO 19.1 ALPHA UNTERSTÜTZT!** Vollständige Kompatibilität mit Odoo 19.1 Alpha-Versionen (z.B. 19.1a1-20251003) bestätigt. → [ODOO_19.1_COMPATIBILITY.md](ODOO_19.1_COMPATIBILITY.md) | [English](ODOO_19.1_COMPATIBILITY_EN.md)
-
-> **✅ ALLE MODELLE VERIFIZIERT!** Umfassende Verifikation bestätigt: Alle 5 Odoo-Modelle sind korrekt definiert und konfiguriert. Das Modul ist installationsbereit. → [MODELL_VERIFIKATION_BERICHT.md](MODELL_VERIFIKATION_BERICHT.md) | [MODEL_VERIFICATION_REPORT.md](MODEL_VERIFICATION_REPORT.md) (English)
+> **✅ ALLE MODELLE VERIFIZIERT!** Umfassende Verifikation bestätigt: Alle 5 Odoo-Modelle sind korrekt definiert und konfiguriert. Das Modul ist installationsbereit.
 
 ---
 
@@ -26,8 +24,6 @@ cd odoo_cjdropship_addon
 ```
 
 **Probleme bei der Installation?** Führen Sie `./verify_installation.sh` aus, um die Installation zu überprüfen.
-
-📖 **Einfache Anleitung auf Deutsch**: [INSTALLATION_EINFACH.md](INSTALLATION_EINFACH.md)
 
 ---
 
@@ -146,8 +142,6 @@ sudo systemctl restart odoo
 
 ---
 
-📖 **Mehr Details**: Siehe [INSTALLATION_GUIDE.md](INSTALLATION_GUIDE.md) für ausführliche Anweisungen und Fehlerbehebung.
-
 ## Konfiguration
 
 ### Schritt 1: API-Zugangsdaten einrichten
@@ -223,6 +217,23 @@ Webhooks ermöglichen automatische Updates von CJDropshipping:
    - Bestellstatus
    - Tracking-Nummern
    - Bestandsinformationen
+
+### Best Practices
+
+#### Produktmanagement
+- Synchronisieren Sie Produkte regelmäßig, um Preise und Bestände aktuell zu halten
+- Nutzen Sie Kategorien zur Organisation Ihrer Produkte
+- Prüfen Sie importierte Produkte vor der Veröffentlichung im Shop
+
+#### Bestellverwaltung
+- Aktivieren Sie automatische Auftragserfüllung für einen reibungslosen Ablauf
+- Überwachen Sie Bestellstatus regelmäßig über die CJ Bestellungen-Übersicht
+- Nutzen Sie Webhooks für Echtzeit-Updates
+
+#### Performance
+- Führen Sie Bulk-Operationen außerhalb der Stoßzeiten durch
+- Archivieren Sie alte Webhook-Einträge regelmäßig
+- Beachten Sie die API-Rate-Limits von CJDropshipping
 
 ## Modulstruktur
 
@@ -301,10 +312,7 @@ Beide Skripte überprüfen:
 - ✅ Alle XML-Referenzen sind gültig
 - ✅ Alle CSV-Zugriffsrechte sind definiert
 
-**Verifikationsberichte:**
-- 🇩🇪 [Deutscher Bericht](MODELL_VERIFIKATION_BERICHT.md)
-- 🇬🇧 [English Report](MODEL_VERIFICATION_REPORT.md)
-- 📋 [Kurzzusammenfassung](VERIFICATION_SUMMARY.md)
+Die Verifikation bestätigt die korrekte Installation aller Komponenten.
 
 ## Fehlerbehebung
 
@@ -349,10 +357,75 @@ Beide Skripte überprüfen:
 - Stellen Sie sicher, dass die URL von außen erreichbar ist
 - Prüfen Sie die Firewall-Einstellungen
 
+### Python-Abhängigkeiten fehlen
+Wenn `requests` nicht installiert ist:
+```bash
+pip3 install requests
+# oder
+sudo apt install python3-requests
+```
+
+### Logs überprüfen
+Bei Problemen prüfen Sie die Odoo-Logs:
+```bash
+sudo tail -f /var/log/odoo/odoo-server.log
+```
+
 ## Support und Beiträge
 
 - **Issues**: https://github.com/MBadberg/odoo_cjdropship_addon/issues
 - **Pull Requests**: Beiträge sind willkommen!
+
+### Beiträge (Contributing)
+
+Wir freuen uns über Beiträge zur Verbesserung dieses Addons!
+
+#### Wie Sie beitragen können:
+1. Forken Sie das Repository
+2. Erstellen Sie einen Feature-Branch (`git checkout -b feature/AmazingFeature`)
+3. Committen Sie Ihre Änderungen (`git commit -m 'Add some AmazingFeature'`)
+4. Pushen Sie zum Branch (`git push origin feature/AmazingFeature`)
+5. Öffnen Sie einen Pull Request
+
+#### Code-Standards:
+- Folgen Sie den Odoo-Entwicklungsrichtlinien
+- Kommentieren Sie komplexen Code
+- Testen Sie Ihre Änderungen gründlich
+- Aktualisieren Sie die Dokumentation bei Bedarf
+
+## Entwickler-Informationen
+
+### Architektur
+
+Das Addon besteht aus folgenden Hauptkomponenten:
+
+1. **API-Client** (`cjdropship_api.py`): Handhabt alle Kommunikation mit der CJDropshipping API
+2. **Konfiguration** (`cjdropship_config.py`): Speichert API-Zugangsdaten und Einstellungen
+3. **Produkte** (`cjdropship_product.py`): Verwaltet importierte CJ-Produkte
+4. **Bestellungen** (`cjdropship_order.py`): Verarbeitet Bestellungen an CJDropshipping
+5. **Webhooks** (`cjdropship_webhook.py`): Empfängt und verarbeitet Webhook-Events
+
+### Extension Points
+
+Das Addon kann über folgende Mechanismen erweitert werden:
+
+- **Modell-Vererbung**: Erweitern Sie `sale.order` oder `product.template` für zusätzliche Felder
+- **API-Methoden**: Fügen Sie neue API-Endpunkte in `cjdropship_api.py` hinzu
+- **Webhook-Handler**: Erweitern Sie die Webhook-Verarbeitung für zusätzliche Events
+- **Wizards**: Erstellen Sie neue Assistenten für spezielle Import-/Export-Aufgaben
+
+### Testing
+
+```bash
+# Modulstruktur prüfen
+python3 verify_models_simple.py
+
+# Detaillierte Verifikation
+python3 verify_models_comprehensive.py
+
+# Installation prüfen
+./verify_installation.sh
+```
 
 ## Lizenz
 
@@ -365,9 +438,4 @@ https://developers.cjdropshipping.com/en/api/introduction.html
 
 ## Changelog
 
-### Version 19.0.1.0.0
-- Initiale Version
-- Produktimport
-- Automatische Auftragserfüllung
-- Bestands- und Logistikabfragen
-- Webhook-Integration
+Für detaillierte Release Notes und Changelog siehe [RELEASE_NOTES.md](RELEASE_NOTES.md).
