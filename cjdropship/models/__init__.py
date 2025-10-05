@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from . import cjdropship_api
 from . import cjdropship_config
 from . import cjdropship_product
 from . import cjdropship_order
