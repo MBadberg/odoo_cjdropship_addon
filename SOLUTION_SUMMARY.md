@@ -158,7 +158,7 @@ Die Skripte wurden für folgende Szenarien entwickelt:
 
 Die Lösung funktioniert mit:
 
-- ✅ Odoo 19.0
+- ✅ Odoo 19.0 und 19.1 (Community Edition, inkl. Alpha-Versionen)
 - ✅ Ubuntu/Debian Linux
 - ✅ Python 3.10+
 - ✅ systemd-basierte Systeme

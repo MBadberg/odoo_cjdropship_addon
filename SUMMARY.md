@@ -16,7 +16,7 @@ The implementation fulfills all requirements from the problem statement:
 
 ### Technical Specifications
 
-**Platform:** Odoo 19.0
+**Platform:** Odoo 19.0 / 19.1 (Community Edition, including alpha versions)
 **Language:** Python 3.10+
 **License:** LGPL-3
 **External Dependencies:** requests
@@ -294,7 +294,7 @@ Notification ← Update Odoo ← Update Related Records ← Event Handler
 ## Deployment Readiness
 
 ### Prerequisites Met
-- ✅ Odoo 19.0 compatibility
+- ✅ Odoo 19.0 and 19.1 (including alpha versions) compatibility
 - ✅ Python 3.10+ support
 - ✅ External dependencies documented
 - ✅ Installation guide provided

@@ -183,7 +183,7 @@ Beide Skripte bestätigen, dass alle 5 Modelle korrekt definiert sind.
 
 Das CJDropshipping Odoo-Modul ist **korrekt strukturiert** mit allen erforderlichen, korrekt definierten Modellen. Das Modul sollte:
 
-- ✅ Erfolgreich in Odoo 19.0 Community Edition installiert werden
+- ✅ Erfolgreich in Odoo 19.0 und 19.1 Community Edition (inkl. Alpha-Versionen) installiert werden
 - ✅ Alle Modelle ohne Fehler laden
 - ✅ Alle Ansichten korrekt anzeigen
 - ✅ Zugriffsrechte korrekt anwenden
@@ -236,7 +236,7 @@ Die externe Analyse, die fehlende Modelle meldete, war **falsch**. Alle 5 Modell
 
 Falls Sie bei der Installation auf Probleme stoßen:
 
-1. Stellen Sie sicher, dass Sie Odoo 19.0 Community Edition verwenden
+1. Stellen Sie sicher, dass Sie Odoo 19.0 oder 19.1 Community Edition (inkl. Alpha-Versionen) verwenden
 2. Überprüfen Sie, dass alle Abhängigkeiten installiert sind: `base`, `sale_management`, `stock`, `product`
 3. Prüfen Sie die Odoo-Logs auf spezifische Fehlermeldungen
 4. Führen Sie die Verifikationsskripte aus, um die Modulstruktur zu bestätigen
