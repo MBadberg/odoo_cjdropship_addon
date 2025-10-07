@@ -392,10 +392,7 @@ print_next_steps() {
     echo "- Test the connection"
     echo "- Start importing products!"
     echo ""
-    print_info "For detailed documentation, see:"
-    echo "  - README.md"
-    echo "  - QUICKSTART.md"
-    echo "  - INSTALLATION_GUIDE.md"
+    print_info "For detailed documentation, see README.md"
     echo ""
 }
 
