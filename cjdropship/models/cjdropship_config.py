@@ -19,8 +19,8 @@ class CJDropshippingConfig(models.Model):
     active = fields.Boolean(string='Active', default=True)
     
     # API Credentials
-    api_email = fields.Char(string='API Email', required=True, help="Your CJDropshipping account email")
-    api_password = fields.Char(string='API Password', required=True, help="Your CJDropshipping account password")
+    api_email = fields.Char(string='API Email', help="Your CJDropshipping account email")
+    api_password = fields.Char(string='API Password', help="Your CJDropshipping account password")
     
     # Sync Settings
     auto_sync_products = fields.Boolean(string='Auto Sync Products', default=False,
