@@ -89,7 +89,7 @@
         <field name="name">cjdropship.product.search</field>
         <field name="model">cjdropship.product</field>
         <field name="arch" type="xml">
-            <search string="Search CJDropshipping Products">
+            <search>
                 <field name="cj_product_name"/>
                 <field name="cj_product_id"/>
                 <field name="cj_product_sku"/>
@@ -97,10 +97,8 @@
                 <filter string="Active" name="active" domain="[('active', '=', True)]"/>
                 <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
                 <separator/>
-                <filter string="With Odoo Product" name="with_odoo_product" 
-                    domain="[('product_tmpl_id', '!=', False)]"/>
-                <filter string="Without Odoo Product" name="without_odoo_product" 
-                    domain="[('product_tmpl_id', '=', False)]"/>
+                <filter string="With Odoo Product" name="with_odoo_product" domain="[('product_tmpl_id', '!=', False)]"/>
+                <filter string="Without Odoo Product" name="without_odoo_product" domain="[('product_tmpl_id', '=', False)]"/>
                 <separator/>
                 <filter string="In Stock" name="in_stock" domain="[('cj_stock_qty', '>', 0)]"/>
                 <filter string="Out of Stock" name="out_of_stock" domain="[('cj_stock_qty', '=', 0)]"/>
