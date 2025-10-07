@@ -37,8 +37,8 @@ Configuration:
 3. Configure sync settings
 4. Import products or enable automatic order fulfillment
     """,
-    'author': 'Your Company',
-    'website': 'https://www.yourcompany.com',
+    'author': 'Markus Badberg IT Spezialist',
+    'website': 'https://badberg.online',
     'license': 'LGPL-3',
     'depends': [
         'base',
