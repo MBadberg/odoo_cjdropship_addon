@@ -1,6 +1,15 @@
 # Release Notes - CJDropshipping Odoo Integration
 
-## Version 19.0.1.0.0
+## Version 19.1.0.0.1 (2025-01-XX)
+
+### Bugfixes
+- **🔧 Kritischer Fix**: Behoben: "Invalid field 'category_id' in 'res.groups'" Fehler beim Installieren
+  - Entfernt: `category_id` Feld aus res.groups (in Odoo 19 nicht mehr unterstützt)
+  - Entfernt: ir.module.category Definition (in Odoo 19 obsolet)
+  - Verbessert: Gruppen-Namen verwenden jetzt "/" Separator für bessere UI-Organisation
+  - Kompatibilität: Vollständig kompatibel mit Odoo 19.0 und 19.1
+
+## Version 19.1.0.0.0
 
 ### Initiale Version
 - Vollständige Integration mit CJDropshipping API
