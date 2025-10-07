@@ -69,7 +69,7 @@
         <field name="name">cjdropship.product.tree</field>
         <field name="model">cjdropship.product</field>
         <field name="arch" type="xml">
-            <tree string="CJDropshipping Products">
+            <list string="CJDropshipping Products">
                 <field name="cj_product_id"/>
                 <field name="cj_product_name"/>
                 <field name="cj_product_sku"/>
@@ -80,7 +80,7 @@
                 <field name="product_tmpl_id"/>
                 <field name="sync_date"/>
                 <field name="active"/>
-            </tree>
+            </list>
         </field>
     </record>
     

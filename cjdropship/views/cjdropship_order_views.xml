@@ -69,7 +69,7 @@
         <field name="name">cjdropship.order.tree</field>
         <field name="model">cjdropship.order</field>
         <field name="arch" type="xml">
-            <tree string="CJDropshipping Orders" decoration-info="state == 'draft'" 
+            <list string="CJDropshipping Orders" decoration-info="state == 'draft'" 
                 decoration-success="state == 'delivered'" decoration-danger="state == 'error'">
                 <field name="cj_order_id"/>
                 <field name="cj_order_num"/>
@@ -78,7 +78,7 @@
                 <field name="state"/>
                 <field name="tracking_number"/>
                 <field name="shipping_cost"/>
-            </tree>
+            </list>
         </field>
     </record>
     
