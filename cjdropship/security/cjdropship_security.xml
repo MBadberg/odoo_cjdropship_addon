@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     
-    <!-- CJDropshipping Category -->
-    <record id="module_category_cjdropship" model="ir.module.category">
-        <field name="name">CJDropshipping</field>
-        <field name="description">Manage CJDropshipping Integration</field>
-        <field name="sequence">20</field>
-    </record>
-    
     <!-- CJDropshipping User Group -->
     <record id="group_cjdropship_user" model="res.groups">
-        <field name="name">User</field>
-        <field name="category_id" ref="module_category_cjdropship"/>
+        <field name="name">CJDropshipping / User</field>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
     
     <!-- CJDropshipping Manager Group -->
     <record id="group_cjdropship_manager" model="res.groups">
-        <field name="name">Manager</field>
-        <field name="category_id" ref="module_category_cjdropship"/>
+        <field name="name">CJDropshipping / Manager</field>
         <field name="implied_ids" eval="[(4, ref('group_cjdropship_user'))]"/>
         <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
     </record>
