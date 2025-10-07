@@ -1,3 +1,5 @@
+# WORK in PROGESS! Not yet working!
+
 # CJDropshipping Odoo 19 Integration
 
 Ein Odoo 19 Addon für die Integration mit der CJDropshipping API.
