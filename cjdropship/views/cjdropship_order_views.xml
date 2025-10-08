@@ -76,12 +76,10 @@
                 <field name="sale_order_id"/>
                 <field name="order_date"/>
                 <field name="state"/>
-                <field name="tracking_number"/>
-                <field name="shipping_cost"/>
             </list>
         </field>
     </record>
-    
+
     <!-- Order Search View -->
     <record id="view_cjdropship_order_search" model="ir.ui.view">
         <field name="name">cjdropship.order.search</field>
@@ -91,61 +89,11 @@
                 <field name="cj_order_id"/>
                 <field name="cj_order_num"/>
                 <field name="sale_order_id"/>
-                <field name="tracking_number"/>
-                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
-                <filter string="Submitted" name="submitted" domain="[('state', '=', 'submitted')]"/>
-                <filter string="Processing" name="processing" domain="[('state', '=', 'processing')]"/>
-                <filter string="Shipped" name="shipped" domain="[('state', '=', 'shipped')]"/>
-                <filter string="Delivered" name="delivered" domain="[('state', '=', 'delivered')]"/>
-                <filter string="Error" name="error" domain="[('state', '=', 'error')]"/>
-                <group expand="0" string="Group By">
-                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
-                    <filter string="Order Date" name="group_date" context="{'group_by': 'order_date'}"/>
-                    <filter string="Configuration" name="group_config" context="{'group_by': 'config_id'}"/>
-                </group>
+                <field name="order_date"/>
+                <filter string="Draft" name="draft" domain="[('state','=','draft')]"/>
+                <filter string="Delivered" name="delivered" domain="[('state','=','delivered')]"/>
+                <filter string="Error" name="error" domain="[('state','=','error')]"/>
             </search>
         </field>
     </record>
-    
-    <!-- Order Action -->
-    <record id="action_cjdropship_order" model="ir.actions.act_window">
-        <field name="name">CJDropshipping Orders</field>
-        <field name="res_model">cjdropship.order</field>
-        <field name="view_mode">tree,form</field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                No CJDropshipping orders yet
-            </p>
-            <p>
-                Orders containing CJDropshipping products will appear here.
-            </p>
-        </field>
-    </record>
-    
-    <!-- Sale Order Form View Inherit -->
-    <record id="view_order_form_inherit_cjdropship" model="ir.ui.view">
-        <field name="name">sale.order.form.inherit.cjdropship</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//div[@name='button_box']" position="inside">
-                <button class="oe_stat_button" name="action_view_cjdropship_order" type="object" 
-                    icon="fa-truck" invisible="not is_cjdropship_order or not cjdropship_order_id">
-                    <div class="o_stat_info">
-                        <field name="cjdropship_state"/>
-                        <span class="o_stat_text">CJ Order</span>
-                    </div>
-                </button>
-                <field name="is_cjdropship_order" invisible="1"/>
-                <field name="cjdropship_order_id" invisible="1"/>
-            </xpath>
-            <xpath expr="//field[@name='partner_shipping_id']" position="after">
-                <field name="is_cjdropship_order" invisible="1"/>
-                <button name="action_submit_to_cjdropship" string="Submit to CJDropshipping" 
-                    type="object" class="btn-primary" 
-                    invisible="not is_cjdropship_order or cjdropship_order_id or state != 'sale'"/>
-            </xpath>
-        </field>
-    </record>
-
 </odoo>
