@@ -42,6 +42,7 @@ Configuration:
     'license': 'LGPL-3',
     'depends': [
         'base',
+        'mail',
         'sale_management',
         'stock',
         'product',
