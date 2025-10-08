@@ -16,21 +16,14 @@ jobs:
       - name: Clone OCA maintainer-quality-tools
         run: git clone https://github.com/OCA/maintainer-quality-tools.git maintainer-quality-tools
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.8"
-
-      - name: Install OCA Quality Tools requirements
-        run: |
-          git clone https://github.com/OCA/maintainer-quality-tools.git $HOME/maintainer-quality-tools
-          pip install -r $HOME/maintainer-quality-tools/requirements.txt
+      - name: Install requirements
+        run: pip install -r maintainer-quality-tools/requirements.txt
 
       - name: Run pylint-odoo
-        run: $HOME/maintainer-quality-tools/travis/run_pylint.sh .
+        run: maintainer-quality-tools/travis/run_pylint.sh .
 
       - name: Run flake8
-        run: $HOME/maintainer-quality-tools/travis/run_flake8.sh .
+        run: maintainer-quality-tools/travis/run_flake8.sh .
 
-      - name: Run black (code style)
-        run: $HOME/maintainer-quality-tools/travis/run_black.sh .
+      - name: Run black
+        run: maintainer-quality-tools/travis/run_black.sh .
