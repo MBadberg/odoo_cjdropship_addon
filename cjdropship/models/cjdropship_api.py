@@ -53,7 +53,7 @@ class CJDropshippingAPI:
             else:
                 error_msg = data.get('message', 'Unknown error')
                 raise ValueError(
-                    "Authentication failed: %s" % error_msg
+                    f"Authentication failed: {error_msg}"
                 )
 
         except requests.exceptions.RequestException as e:
@@ -82,7 +82,7 @@ class CJDropshippingAPI:
                 )
             else:
                 raise ValueError(
-                    "Unsupported HTTP method: %s" % method
+                    f"Unsupported HTTP method: {method}"
                 )
 
             response.raise_for_status()
@@ -90,7 +90,7 @@ class CJDropshippingAPI:
 
             if result.get('code') != 200:
                 error_msg = result.get('message', 'Unknown error')
-                raise ValueError("API Error: %s" % error_msg)
+                raise ValueError(f"API Error: {error_msg}")
 
             return result.get('data', {})
 
