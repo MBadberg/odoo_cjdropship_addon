@@ -11,6 +11,7 @@ _logger = logging.getLogger(__name__)
 class CJDropshippingOrder(models.Model):
     _name = 'cjdropship.order'
     _description = 'CJDropshipping Order'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _rec_name = 'cj_order_id'
     _order = 'create_date desc'
     
