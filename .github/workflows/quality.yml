@@ -1,0 +1,33 @@
+name: OCA Quality Tools
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+
+      - name: Install OCA Quality Tools requirements
+        run: |
+          git clone https://github.com/OCA/maintainer-quality-tools.git $HOME/maintainer-quality-tools
+          pip install -r $HOME/maintainer-quality-tools/requirements.txt
+
+      - name: Run pylint-odoo
+        run: $HOME/maintainer-quality-tools/travis/run_pylint.sh .
+
+      - name: Run flake8
+        run: $HOME/maintainer-quality-tools/travis/run_flake8.sh .
+
+      - name: Run black (code style)
+        run: $HOME/maintainer-quality-tools/travis/run_black.sh .
