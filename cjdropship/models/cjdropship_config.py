@@ -23,7 +23,7 @@ class CJDropshippingConfig(models.Model):
         required=True,
         default='CJDropshipping Settings'
     )
-    active = fields.Boolean('Active', default=True)
+    active = fields.Boolean(default=True)
 
     # API Credentials
     api_email = fields.Char(
@@ -37,7 +37,6 @@ class CJDropshippingConfig(models.Model):
 
     # Sync Settings
     auto_sync_products = fields.Boolean(
-        'Auto Sync Products',
         default=False,
         help="Automatically sync product inventory and prices"
     )
@@ -48,7 +47,6 @@ class CJDropshippingConfig(models.Model):
     )
 
     auto_fulfill_orders = fields.Boolean(
-        'Auto Fulfill Orders',
         default=False,
         help="Automatically send orders to CJDropshipping when confirmed"
     )
@@ -76,12 +74,10 @@ class CJDropshippingConfig(models.Model):
             ('fixed', 'Fixed Amount'),
             ('percentage', 'Percentage')
         ],
-        'Price Markup Type',
         default='percentage'
     )
 
     price_markup = fields.Float(
-        'Price Markup',
         default=30.0,
         help="Markup to add to CJDropshipping prices"
     )
@@ -93,21 +89,20 @@ class CJDropshippingConfig(models.Model):
         compute='_compute_webhook_url',
         help="URL for CJDropshipping to send status updates"
     )
-    webhook_enabled = fields.Boolean('Enable Webhooks', default=True)
+    webhook_enabled = fields.Boolean(default=True)
 
     # Status
-    last_sync_date = fields.Datetime('Last Sync Date', readonly=True)
+    last_sync_date = fields.Datetime(readonly=True)
     connection_status = fields.Selection(
         [
             ('not_tested', 'Not Tested'),
             ('connected', 'Connected'),
             ('error', 'Connection Error')
         ],
-        'Connection Status',
         default='not_tested',
         readonly=True
     )
-    connection_message = fields.Text('Connection Message', readonly=True)
+    connection_message = fields.Text(readonly=True)
 
     @api.depends('webhook_enabled')
     def _compute_webhook_url(self):

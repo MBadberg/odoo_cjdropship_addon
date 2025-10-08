@@ -24,21 +24,20 @@ class CJDropshippingWebhook(models.Model):
             ('inventory', 'Inventory Update'),
             ('other', 'Other'),
         ],
-        'Webhook Type',
         required=True
     )
 
     cj_order_id = fields.Char('CJ Order ID', index=True)
-    event = fields.Char('Event')
+    event = fields.Char()
 
     # Data
     payload = fields.Text('Payload (JSON)')
     headers = fields.Text('Headers (JSON)')
 
     # Processing
-    processed = fields.Boolean('Processed', default=False)
-    process_date = fields.Datetime('Process Date')
-    error_message = fields.Text('Error Message')
+    processed = fields.Boolean(default=False)
+    process_date = fields.Datetime()
+    error_message = fields.Text()
 
     # Relations
     order_id = fields.Many2one(
@@ -111,7 +110,7 @@ class CJDropshippingWebhook(models.Model):
 
             # Update sale order
             order.sale_order_id.message_post(
-                body=self.env._('Tracking number: %s') % tracking_number
+                body=self.env._('Tracking number: %s', tracking_number)
             )
 
     def _process_inventory_update(self, payload):

@@ -40,7 +40,7 @@ class CJDropshippingOrder(models.Model):
     )
 
     # Order Information
-    order_date = fields.Datetime('Order Date', default=fields.Datetime.now)
+    order_date = fields.Datetime(default=fields.Datetime.now)
 
     # Status
     state = fields.Selection(
@@ -53,15 +53,14 @@ class CJDropshippingOrder(models.Model):
             ('cancelled', 'Cancelled'),
             ('error', 'Error'),
         ],
-        'Status',
         default='draft',
         required=True,
         tracking=True
     )
 
     # Shipping
-    tracking_number = fields.Char('Tracking Number', readonly=True)
-    shipping_method = fields.Char('Shipping Method')
+    tracking_number = fields.Char(readonly=True)
+    shipping_method = fields.Char()
     shipping_cost = fields.Float('Shipping Cost', digits='Product Price')
 
     # Logistics

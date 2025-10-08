@@ -27,12 +27,12 @@ class CJDropshippingProduct(models.Model):
     cj_variant_id = fields.Char('CJ Variant ID', index=True)
 
     # Product Information
-    description = fields.Text('Description')
+    description = fields.Text()
     category_name = fields.Char('CJ Category')
 
     # Pricing
     cj_price = fields.Float('CJ Price', digits='Product Price')
-    selling_price = fields.Float('Selling Price', digits='Product Price')
+    selling_price = fields.Float(digits='Product Price')
 
     # Inventory
     cj_stock_qty = fields.Integer('CJ Stock Quantity')
@@ -64,7 +64,7 @@ class CJDropshippingProduct(models.Model):
     )
 
     # Status
-    active = fields.Boolean('Active', default=True)
+    active = fields.Boolean(default=True)
     sync_date = fields.Datetime('Last Sync Date')
 
     _sql_constraints = [
@@ -79,13 +79,16 @@ class CJDropshippingProduct(models.Model):
         """Create or update Odoo product from CJ product."""
         self.ensure_one()
 
-        ProductTemplate = self.env['product.template']
+        product_template_model = self.env['product.template']
 
         # Prepare product values
+        categ_id = False
+        if self.config_id.default_categ_id:
+            categ_id = self.config_id.default_categ_id.id
         vals = {
             'name': self.cj_product_name,
             'type': self.config_id.default_product_type,
-            'categ_id': self.config_id.default_categ_id.id if self.config_id.default_categ_id else False,
+            'categ_id': categ_id,
             'list_price': self.selling_price,
             'standard_price': self.cj_price,
             'description_sale': self.description,
@@ -103,7 +106,7 @@ class CJDropshippingProduct(models.Model):
             product = self.product_tmpl_id
         else:
             # Create new product
-            product = ProductTemplate.create(vals)
+            product = product_template_model.create(vals)
             self.product_tmpl_id = product.id
 
         # Download and set image if URL is available

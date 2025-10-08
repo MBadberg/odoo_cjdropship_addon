@@ -88,8 +88,9 @@ class SaleOrder(models.Model):
                 )
                 self.message_post(
                     body=self.env._(
-                        'Failed to submit order to CJDropshipping: %s'
-                    ) % str(exc),
+                        'Failed to submit order to CJDropshipping: %s',
+                        str(exc)
+                    ),
                     message_type='notification'
                 )
 
