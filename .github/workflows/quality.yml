@@ -1,4 +1,4 @@
-name: OCA Quality Tools
+name: Odoo Quality Checks
 
 on:
   push:
@@ -18,20 +18,15 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Clone OCA maintainer-quality-tools
-        run: git clone https://github.com/OCA/maintainer-quality-tools.git maintainer-quality-tools
-
-      - name: Remove incompatible PyYAML from requirements
-        run: sed -i '/pyyaml==5.4/d' maintainer-quality-tools/requirements.txt
-
-      - name: Install requirements
-        run: pip install -r maintainer-quality-tools/requirements.txt
+      - name: Install pylint-odoo, flake8, black
+        run: |
+          pip install pylint pylint-odoo flake8 black
 
       - name: Run pylint-odoo
-        run: maintainer-quality-tools/run_pylint.sh .
+        run: pylint --load-plugins=pylint_odoo .
 
       - name: Run flake8
-        run: maintainer-quality-tools/run_flake8.sh .
+        run: flake8 .
 
-      - name: Run black
-        run: maintainer-quality-tools/run_black.sh .
+      - name: Run black check
+        run: black --check .
