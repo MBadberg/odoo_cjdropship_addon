@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""CJDropshipping Models."""
 
 from . import cjdropship_api
 from . import cjdropship_config
