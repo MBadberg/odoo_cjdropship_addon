@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Webhook controller for CJDropshipping integration."""
 
 import json
 import logging
@@ -10,15 +11,27 @@ _logger = logging.getLogger(__name__)
 
 
 class CJDropshippingWebhookController(http.Controller):
+    """Controller for handling CJDropshipping webhooks."""
 
-    @http.route('/cjdropship/webhook/<int:config_id>', type='json', auth='public', methods=['POST'], csrf=False)
+    @http.route(
+        '/cjdropship/webhook/<int:config_id>',
+        type='json',
+        auth='public',
+        methods=['POST'],
+        csrf=False
+    )
     def receive_webhook(self, config_id, **kwargs):
-        """Receive webhook from CJDropshipping"""
+        """Receive webhook from CJDropshipping."""
         try:
             # Get config to verify it exists
-            config = request.env['cjdropship.config'].sudo().browse(config_id)
+            config = (
+                request.env['cjdropship.config'].sudo().browse(config_id)
+            )
             if not config.exists() or not config.webhook_enabled:
-                return {'status': 'error', 'message': 'Webhook not enabled'}
+                return {
+                    'status': 'error',
+                    'message': 'Webhook not enabled'
+                }
 
             # Get request data
             payload = request.httprequest.get_json(force=True)
@@ -47,15 +60,22 @@ class CJDropshippingWebhookController(http.Controller):
             # Process webhook immediately
             webhook.action_process_webhook()
 
-            _logger.info(f"Received CJDropshipping webhook: {event}")
+            _logger.info("Received CJDropshipping webhook: %s", event)
 
             return {'status': 'success', 'message': 'Webhook received'}
 
-        except Exception as e:
-            _logger.error(f"Error processing CJDropshipping webhook: {str(e)}")
-            return {'status': 'error', 'message': str(e)}
+        except Exception as exc:
+            _logger.error(
+                "Error processing CJDropshipping webhook: %s", str(exc)
+            )
+            return {'status': 'error', 'message': str(exc)}
 
-    @http.route('/cjdropship/webhook/test', type='http', auth='public', methods=['GET'])
+    @http.route(
+        '/cjdropship/webhook/test',
+        type='http',
+        auth='public',
+        methods=['GET']
+    )
     def test_webhook(self, **kwargs):
-        """Test endpoint to verify webhook URL is accessible"""
+        """Test endpoint to verify webhook URL is accessible."""
         return "CJDropshipping webhook endpoint is active"

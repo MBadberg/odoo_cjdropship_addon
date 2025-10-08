@@ -1,49 +1,60 @@
 # -*- coding: utf-8 -*-
+"""CJDropshipping Webhook Model."""
 
+import json
 import logging
 
-from odoo import models, fields, api, _
+from odoo import models, fields
 
 _logger = logging.getLogger(__name__)
 
 
 class CJDropshippingWebhook(models.Model):
+    """Model for logging and processing CJDropshipping webhooks."""
+
     _name = 'cjdropship.webhook'
     _description = 'CJDropshipping Webhook Log'
     _rec_name = 'webhook_type'
     _order = 'create_date desc'
 
-    webhook_type = fields.Selection([
-        ('order_status', 'Order Status Update'),
-        ('tracking', 'Tracking Update'),
-        ('inventory', 'Inventory Update'),
-        ('other', 'Other'),
-    ], string='Webhook Type', required=True)
+    webhook_type = fields.Selection(
+        [
+            ('order_status', 'Order Status Update'),
+            ('tracking', 'Tracking Update'),
+            ('inventory', 'Inventory Update'),
+            ('other', 'Other'),
+        ],
+        'Webhook Type',
+        required=True
+    )
 
-    cj_order_id = fields.Char(string='CJ Order ID', index=True)
-    event = fields.Char(string='Event')
+    cj_order_id = fields.Char('CJ Order ID', index=True)
+    event = fields.Char('Event')
 
     # Data
-    payload = fields.Text(string='Payload (JSON)')
-    headers = fields.Text(string='Headers (JSON)')
+    payload = fields.Text('Payload (JSON)')
+    headers = fields.Text('Headers (JSON)')
 
     # Processing
-    processed = fields.Boolean(string='Processed', default=False)
-    process_date = fields.Datetime(string='Process Date')
-    error_message = fields.Text(string='Error Message')
+    processed = fields.Boolean('Processed', default=False)
+    process_date = fields.Datetime('Process Date')
+    error_message = fields.Text('Error Message')
 
     # Relations
-    order_id = fields.Many2one('cjdropship.order', string='CJ Order', ondelete='set null')
+    order_id = fields.Many2one(
+        'cjdropship.order',
+        'CJ Order',
+        ondelete='set null'
+    )
 
     def action_process_webhook(self):
-        """Process webhook data"""
+        """Process webhook data."""
         self.ensure_one()
 
         if self.processed:
             return
 
         try:
-            import json
             payload_data = json.loads(self.payload) if self.payload else {}
 
             if self.webhook_type == 'order_status':
@@ -58,13 +69,13 @@ class CJDropshippingWebhook(models.Model):
                 'process_date': fields.Datetime.now(),
             })
 
-        except Exception as e:
-            error_msg = str(e)
-            _logger.error(f"Failed to process webhook: {error_msg}")
+        except Exception as exc:
+            error_msg = str(exc)
+            _logger.error("Failed to process webhook: %s", error_msg)
             self.error_message = error_msg
 
     def _process_order_status_update(self, payload):
-        """Process order status update webhook"""
+        """Process order status update webhook."""
         cj_order_id = payload.get('orderId')
         if not cj_order_id:
             return
@@ -79,7 +90,7 @@ class CJDropshippingWebhook(models.Model):
             self.order_id = order.id
 
     def _process_tracking_update(self, payload):
-        """Process tracking update webhook"""
+        """Process tracking update webhook."""
         cj_order_id = payload.get('orderId')
         tracking_number = payload.get('trackingNumber')
 
@@ -100,11 +111,11 @@ class CJDropshippingWebhook(models.Model):
 
             # Update sale order
             order.sale_order_id.message_post(
-                body=_('Tracking number: %s') % tracking_number
+                body=self.env._('Tracking number: %s') % tracking_number
             )
 
     def _process_inventory_update(self, payload):
-        """Process inventory update webhook"""
+        """Process inventory update webhook."""
         product_id = payload.get('productId')
         quantity = payload.get('quantity')
 
