@@ -8,10 +8,7 @@
         'Integration with CJDropshipping API for product import '
         'and order fulfillment'
     ),
-    'author': (
-        'Markus Badberg IT Spezialist, '
-        'Odoo Community Association (OCA)'
-    ),
+    'author': 'Markus Badberg IT Spezialist, Odoo Community Association (OCA)',
     'website': 'https://badberg.online',
     'license': 'LGPL-3',
     'depends': [
