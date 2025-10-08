@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 """CJDropshipping Product Model."""
 
+import base64
 import logging
 
-from odoo import models, fields, api
+import requests
+
+from odoo import models, fields
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -112,12 +115,10 @@ class CJDropshippingProduct(models.Model):
         # Download and set image if URL is available
         if self.image_url:
             try:
-                import base64
-                import requests
                 response = requests.get(self.image_url, timeout=10)
                 if response.status_code == 200:
                     product.image_1920 = base64.b64encode(response.content)
-            except Exception as exc:
+            except requests.exceptions.RequestException as exc:
                 _logger.warning(
                     "Failed to download product image: %s", str(exc)
                 )
