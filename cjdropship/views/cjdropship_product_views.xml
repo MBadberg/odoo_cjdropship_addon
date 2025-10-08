@@ -89,7 +89,7 @@
         <field name="name">cjdropship.product.search</field>
         <field name="model">cjdropship.product</field>
         <field name="arch" type="xml">
-            <search>
+            <search string="Search CJDropshipping Products">
                 <field name="cj_product_name"/>
                 <field name="cj_product_id"/>
                 <field name="cj_product_sku"/>
