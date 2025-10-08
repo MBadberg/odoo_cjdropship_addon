@@ -2,7 +2,7 @@
 """CJDropshipping Integration Module for Odoo."""
 {
     'name': 'CJDropshipping Integration',
-    'version': '19.0.1.0.0',
+    'version': '19.1.0.0.0',
     'category': 'Sales/Sales',
     'summary': (
         'Integration with CJDropshipping API for product import '
