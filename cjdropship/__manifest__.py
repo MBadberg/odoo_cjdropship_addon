@@ -1,43 +1,17 @@
 # -*- coding: utf-8 -*-
+"""CJDropshipping Integration Module for Odoo."""
 {
     'name': 'CJDropshipping Integration',
-    'version': '19.1.0.0.1',
+    'version': '19.0.1.0.0',
     'category': 'Sales/Sales',
-    'summary': 'Integration with CJDropshipping API for product import and order fulfillment',
-    'description': """
-CJDropshipping Integration for Odoo
-====================================
-
-This module provides complete integration with CJDropshipping API:
-
-Compatibility:
---------------
-* Odoo 19.0 Community Edition
-* Odoo 19.1 Community Edition (including alpha versions)
-* No Enterprise Edition features required
-
-Features:
----------
-* Import dropshipping products from CJDropshipping catalog
-* Automatic order fulfillment
-* Real-time inventory and logistics queries
-* Webhook integration for order status updates
-* Product sync with CJDropshipping
-* Automatic price and stock updates
-
-Requirements:
--------------
-* CJDropshipping API credentials
-* Active CJDropshipping account
-
-Configuration:
---------------
-1. Go to Sales > Configuration > CJDropshipping > Settings
-2. Enter your API credentials
-3. Configure sync settings
-4. Import products or enable automatic order fulfillment
-    """,
-    'author': 'Markus Badberg IT Spezialist',
+    'summary': (
+        'Integration with CJDropshipping API for product import '
+        'and order fulfillment'
+    ),
+    'author': (
+        'Markus Badberg IT Spezialist, '
+        'Odoo Community Association (OCA)'
+    ),
     'website': 'https://badberg.online',
     'license': 'LGPL-3',
     'depends': [
