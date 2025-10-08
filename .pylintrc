@@ -1,0 +1,30 @@
+[MASTER]
+load-plugins=pylint_odoo
+
+[MESSAGES CONTROL]
+# Disable specific messages that are false positives or Odoo-specific patterns
+disable=
+    # Import errors when Odoo is not installed in the linting environment
+    import-error,
+    # Odoo models often have few public methods
+    too-few-public-methods,
+    # Protected access is common in Odoo for internal methods
+    protected-access,
+    # Duplicate code is common in Odoo due to standard patterns
+    duplicate-code,
+    # Inconsistent returns can be false positives with raise statements
+    inconsistent-return-statements
+
+[FORMAT]
+# Maximum line length
+max-line-length=100
+
+[DESIGN]
+# Maximum number of arguments for function / method
+max-args=10
+# Maximum number of locals for function / method body
+max-locals=25
+# Maximum number of branches for function / method body
+max-branches=20
+# Maximum number of statements in function / method body
+max-statements=75

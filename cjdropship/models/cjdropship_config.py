@@ -3,6 +3,8 @@
 
 import logging
 
+import requests
+
 from odoo import models, fields, api
 from odoo.exceptions import UserError, ValidationError
 
@@ -58,7 +60,6 @@ class CJDropshippingConfig(models.Model):
             ('service', 'Service'),
             ('product', 'Storable Product')
         ],
-        'Default Product Type',
         default='consu',
         required=True
     )
@@ -113,11 +114,11 @@ class CJDropshippingConfig(models.Model):
         for record in self:
             if record.id:
                 record.webhook_url = (
-                    "%s/cjdropship/webhook/%s" % (base_url, record.id)
+                    f"{base_url}/cjdropship/webhook/{record.id}"
                 )
             else:
                 record.webhook_url = (
-                    "%s/cjdropship/webhook/[ID]" % base_url
+                    f"{base_url}/cjdropship/webhook/[ID]"
                 )
 
     @api.constrains('sync_interval')
@@ -173,7 +174,7 @@ class CJDropshippingConfig(models.Model):
                     'sticky': False,
                 }
             }
-        except Exception as exc:
+        except (ValueError, requests.exceptions.RequestException) as exc:
             error_msg = str(exc)
             _logger.error(
                 "CJDropshipping connection test failed: %s", error_msg
@@ -204,9 +205,9 @@ class CJDropshippingConfig(models.Model):
             )
 
         # This will be called from the wizard
-        action = self.env['ir.actions.actions']._for_xml_id(
+        action = self.env.ref(
             'cjdropship.action_product_import_wizard'
-        )
+        ).read()[0]
         action['context'] = {'default_config_id': self.id}
         return action
 

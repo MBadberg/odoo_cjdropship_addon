@@ -4,7 +4,7 @@
 import logging
 
 from odoo import models, fields, api
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -51,7 +51,7 @@ class SaleOrder(models.Model):
                     ].get_default_config()
                     if config.auto_fulfill_orders:
                         order._create_cjdropship_order()
-                except Exception as exc:
+                except (UserError, ValidationError, ValueError) as exc:
                     _logger.warning(
                         "Failed to auto-submit order %s to CJDropshipping: %s",
                         order.name,
@@ -81,7 +81,7 @@ class SaleOrder(models.Model):
         if config.auto_fulfill_orders:
             try:
                 cj_order.action_submit_to_cj()
-            except Exception as exc:
+            except (UserError, ValidationError, ValueError) as exc:
                 _logger.error(
                     "Failed to submit order to CJDropshipping: %s",
                     str(exc)

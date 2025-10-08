@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """CJDropshipping Order Model."""
 
+import json
 import logging
 
-from odoo import models, fields, api
+from odoo import models, fields
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -61,7 +62,7 @@ class CJDropshippingOrder(models.Model):
     # Shipping
     tracking_number = fields.Char(readonly=True)
     shipping_method = fields.Char()
-    shipping_cost = fields.Float('Shipping Cost', digits='Product Price')
+    shipping_cost = fields.Float(digits='Product Price')
 
     # Logistics
     logistics_info = fields.Text('Logistics Information')
@@ -102,7 +103,6 @@ class CJDropshippingOrder(models.Model):
             order_data = self._prepare_cj_order_data()
 
             # Store request data
-            import json
             self.request_data = json.dumps(order_data, indent=2)
 
             # Submit to CJDropshipping
@@ -143,7 +143,7 @@ class CJDropshippingOrder(models.Model):
                 self.env._('Failed to get order ID from CJDropshipping')
             )
 
-        except Exception as exc:
+        except (UserError, ValueError) as exc:
             error_msg = str(exc)
             _logger.error(
                 "Failed to submit order to CJDropshipping: %s", error_msg
@@ -225,18 +225,18 @@ class CJDropshippingOrder(models.Model):
             if result:
                 self._update_from_cj_data(result)
 
-                return {
-                    'type': 'ir.actions.client',
-                    'tag': 'display_notification',
-                    'params': {
-                        'title': self.env._('Success'),
-                        'message': self.env._(
-                            'Order status updated successfully'
-                        ),
-                        'type': 'success',
-                    }
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': self.env._('Success'),
+                    'message': self.env._(
+                        'Order status updated successfully'
+                    ),
+                    'type': 'success',
                 }
-        except Exception as exc:
+            }
+        except (UserError, ValueError) as exc:
             _logger.error("Failed to update order status: %s", str(exc))
             raise UserError(
                 self.env._('Failed to update order status: %s', str(exc))
@@ -254,7 +254,6 @@ class CJDropshippingOrder(models.Model):
             result = client.query_logistics(self.cj_order_id)
 
             if result:
-                import json
                 self.write({
                     'logistics_info': json.dumps(result, indent=2),
                     'last_logistics_update': fields.Datetime.now(),
@@ -264,18 +263,18 @@ class CJDropshippingOrder(models.Model):
                 if result.get('trackingNumber'):
                     self.tracking_number = result['trackingNumber']
 
-                return {
-                    'type': 'ir.actions.client',
-                    'tag': 'display_notification',
-                    'params': {
-                        'title': self.env._('Success'),
-                        'message': self.env._(
-                            'Logistics information updated'
-                        ),
-                        'type': 'success',
-                    }
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': self.env._('Success'),
+                    'message': self.env._(
+                        'Logistics information updated'
+                    ),
+                    'type': 'success',
                 }
-        except Exception as exc:
+            }
+        except (UserError, ValueError) as exc:
             _logger.error("Failed to query logistics: %s", str(exc))
             raise UserError(
                 self.env._('Failed to query logistics: %s', str(exc))

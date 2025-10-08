@@ -68,7 +68,7 @@ class CJDropshippingWebhook(models.Model):
                 'process_date': fields.Datetime.now(),
             })
 
-        except Exception as exc:
+        except (ValueError, KeyError, TypeError) as exc:
             error_msg = str(exc)
             _logger.error("Failed to process webhook: %s", error_msg)
             self.error_message = error_msg

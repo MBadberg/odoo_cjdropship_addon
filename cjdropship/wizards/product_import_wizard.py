@@ -3,8 +3,8 @@
 
 import logging
 
-from odoo import models, fields, api
-from odoo.exceptions import UserError
+from odoo import models, fields
+from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -128,7 +128,7 @@ class ProductImportWizard(models.TransientModel):
 
                     imported_count += 1
 
-                except Exception as exc:
+                except (UserError, ValidationError, ValueError) as exc:
                     _logger.warning(
                         "Failed to import product %s: %s",
                         product_data.get('pid'),
@@ -155,7 +155,7 @@ class ProductImportWizard(models.TransientModel):
                 }
             }
 
-        except Exception as exc:
+        except (UserError, ValidationError, ValueError) as exc:
             error_msg = str(exc)
             _logger.error("Product import failed: %s", error_msg)
 

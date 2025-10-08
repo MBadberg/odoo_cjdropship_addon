@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 """CJDropshipping Product Model."""
 
+import base64
 import logging
 
-from odoo import models, fields, api
+import requests
+
+from odoo import models, fields
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -112,12 +115,10 @@ class CJDropshippingProduct(models.Model):
         # Download and set image if URL is available
         if self.image_url:
             try:
-                import base64
-                import requests
                 response = requests.get(self.image_url, timeout=10)
                 if response.status_code == 200:
                     product.image_1920 = base64.b64encode(response.content)
-            except Exception as exc:
+            except requests.exceptions.RequestException as exc:
                 _logger.warning(
                     "Failed to download product image: %s", str(exc)
                 )
@@ -171,7 +172,7 @@ class CJDropshippingProduct(models.Model):
                     update_vals['cj_stock_qty'] = int(
                         inventory_data.get('quantity', 0)
                     )
-            except Exception as exc:
+            except (ValueError, requests.exceptions.RequestException) as exc:
                 _logger.warning(
                     "Failed to get inventory for %s: %s",
                     self.cj_product_id,
@@ -196,7 +197,11 @@ class CJDropshippingProduct(models.Model):
                     'type': 'success',
                 }
             }
-        except Exception as exc:
+        except (
+            UserError,
+            ValueError,
+            requests.exceptions.RequestException
+        ) as exc:
             _logger.error(
                 "Failed to sync product %s: %s",
                 self.cj_product_id,

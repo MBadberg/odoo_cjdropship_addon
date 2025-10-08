@@ -20,7 +20,7 @@ class CJDropshippingWebhookController(http.Controller):
         methods=['POST'],
         csrf=False
     )
-    def receive_webhook(self, config_id, **kwargs):
+    def receive_webhook(self, config_id):
         """Receive webhook from CJDropshipping."""
         try:
             # Get config to verify it exists
@@ -64,7 +64,7 @@ class CJDropshippingWebhookController(http.Controller):
 
             return {'status': 'success', 'message': 'Webhook received'}
 
-        except Exception as exc:
+        except (ValueError, KeyError, TypeError) as exc:
             _logger.error(
                 "Error processing CJDropshipping webhook: %s", str(exc)
             )
@@ -76,6 +76,6 @@ class CJDropshippingWebhookController(http.Controller):
         auth='public',
         methods=['GET']
     )
-    def test_webhook(self, **kwargs):
+    def test_webhook(self):
         """Test endpoint to verify webhook URL is accessible."""
         return "CJDropshipping webhook endpoint is active"
