@@ -85,27 +85,13 @@
     </record>
     
     <!-- Product Search View -->
-    <record id="view_cjdropship_product_search" model="ir.ui.view">
+     <record id="view_cjdropship_product_search" model="ir.ui.view">
         <field name="name">cjdropship.product.search</field>
         <field name="model">cjdropship.product</field>
         <field name="arch" type="xml">
             <search string="Search CJDropshipping Products">
                 <field name="cj_product_name"/>
-                <field name="cj_product_id"/>
-                <field name="cj_product_sku"/>
-                <field name="category_name"/>
-                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
-                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
-                <separator/>
-                <filter string="With Odoo Product" name="with_odoo_product" domain="[('product_tmpl_id', '!=', False)]"/>
-                <filter string="Without Odoo Product" name="without_odoo_product" domain="[('product_tmpl_id', '=', False)]"/>
-                <separator/>
-                <filter string="In Stock" name="in_stock" domain="[('cj_stock_qty', '>', 0)]"/>
-                <filter string="Out of Stock" name="out_of_stock" domain="[('cj_stock_qty', '=', 0)]"/>
-                <group expand="0" string="Group By">
-                    <filter string="Category" name="group_category" context="{'group_by': 'category_name'}"/>
-                    <filter string="Configuration" name="group_config" context="{'group_by': 'config_id'}"/>
-                </group>
+                <filter string="Active" name="active" domain="[('active','=',True)]"/>
             </search>
         </field>
     </record>
