@@ -172,7 +172,7 @@ class CJDropshippingProduct(models.Model):
                     update_vals['cj_stock_qty'] = int(
                         inventory_data.get('quantity', 0)
                     )
-            except Exception as exc:
+            except (ValueError, requests.exceptions.RequestException) as exc:
                 _logger.warning(
                     "Failed to get inventory for %s: %s",
                     self.cj_product_id,
@@ -197,7 +197,11 @@ class CJDropshippingProduct(models.Model):
                     'type': 'success',
                 }
             }
-        except Exception as exc:
+        except (
+            UserError,
+            ValueError,
+            requests.exceptions.RequestException
+        ) as exc:
             _logger.error(
                 "Failed to sync product %s: %s",
                 self.cj_product_id,

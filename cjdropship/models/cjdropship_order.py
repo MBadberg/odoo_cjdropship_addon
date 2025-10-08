@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """CJDropshipping Order Model."""
 
+import json
 import logging
 
-from odoo import models, fields, api
+from odoo import models, fields
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -61,7 +62,7 @@ class CJDropshippingOrder(models.Model):
     # Shipping
     tracking_number = fields.Char(readonly=True)
     shipping_method = fields.Char()
-    shipping_cost = fields.Float('Shipping Cost', digits='Product Price')
+    shipping_cost = fields.Float(digits='Product Price')
 
     # Logistics
     logistics_info = fields.Text('Logistics Information')
@@ -102,7 +103,6 @@ class CJDropshippingOrder(models.Model):
             order_data = self._prepare_cj_order_data()
 
             # Store request data
-            import json
             self.request_data = json.dumps(order_data, indent=2)
 
             # Submit to CJDropshipping
@@ -143,7 +143,7 @@ class CJDropshippingOrder(models.Model):
                 self.env._('Failed to get order ID from CJDropshipping')
             )
 
-        except Exception as exc:
+        except (UserError, ValueError) as exc:
             error_msg = str(exc)
             _logger.error(
                 "Failed to submit order to CJDropshipping: %s", error_msg
