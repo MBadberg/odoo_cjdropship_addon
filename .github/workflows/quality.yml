@@ -21,6 +21,9 @@ jobs:
       - name: Clone OCA maintainer-quality-tools
         run: git clone https://github.com/OCA/maintainer-quality-tools.git maintainer-quality-tools
 
+      - name: Remove incompatible PyYAML from requirements
+        run: sed -i '/pyyaml==5.4/d' maintainer-quality-tools/requirements.txt
+
       - name: Install requirements
         run: pip install -r maintainer-quality-tools/requirements.txt
 
