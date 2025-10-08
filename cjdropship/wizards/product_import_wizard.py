@@ -31,7 +31,6 @@ class ProductImportWizard(models.TransientModel):
     )
 
     page_number = fields.Integer(
-        'Page Number',
         default=1,
         required=True
     )
@@ -53,12 +52,11 @@ class ProductImportWizard(models.TransientModel):
             ('importing', 'Importing'),
             ('done', 'Done'),
         ],
-        'State',
         default='draft'
     )
 
-    imported_count = fields.Integer('Imported Count', readonly=True)
-    error_message = fields.Text('Error Message', readonly=True)
+    imported_count = fields.Integer(readonly=True)
+    error_message = fields.Text(readonly=True)
 
     def action_import_products(self):
         """Import products from CJDropshipping."""
@@ -82,7 +80,7 @@ class ProductImportWizard(models.TransientModel):
             products_data = result.get('list', [])
             imported_count = 0
 
-            CJProduct = self.env['cjdropship.product']
+            cj_product_model = self.env['cjdropship.product']
 
             for product_data in products_data:
                 try:
@@ -91,7 +89,7 @@ class ProductImportWizard(models.TransientModel):
                         continue
 
                     # Check if product already exists
-                    existing = CJProduct.search([
+                    existing = cj_product_model.search([
                         ('cj_product_id', '=', product_id),
                         ('cj_variant_id', '=', False)
                     ], limit=1)
@@ -119,7 +117,7 @@ class ProductImportWizard(models.TransientModel):
                         existing.write(vals)
                         cj_product = existing
                     else:
-                        cj_product = CJProduct.create(vals)
+                        cj_product = cj_product_model.create(vals)
 
                     # Create Odoo product if requested
                     if (
@@ -149,8 +147,9 @@ class ProductImportWizard(models.TransientModel):
                 'params': {
                     'title': self.env._('Success'),
                     'message': self.env._(
-                        '%d products imported successfully'
-                    ) % imported_count,
+                        '%d products imported successfully',
+                        imported_count
+                    ),
                     'type': 'success',
                     'next': {'type': 'ir.actions.act_window_close'},
                 }
@@ -166,8 +165,8 @@ class ProductImportWizard(models.TransientModel):
             })
 
             raise UserError(
-                self.env._('Import failed: %s') % error_msg
-            )
+                self.env._('Import failed: %s', error_msg)
+            ) from exc
 
     def action_view_imported_products(self):
         """View imported products."""

@@ -203,8 +203,8 @@ class CJDropshippingProduct(models.Model):
                 str(exc)
             )
             raise UserError(
-                self.env._('Failed to sync product: %s') % str(exc)
-            )
+                self.env._('Failed to sync product: %s', str(exc))
+            ) from exc
 
     def action_bulk_create_products(self):
         """Create Odoo products for multiple CJ products."""
@@ -218,8 +218,9 @@ class CJDropshippingProduct(models.Model):
             'params': {
                 'title': self.env._('Success'),
                 'message': self.env._(
-                    '%d products created successfully'
-                ) % len(self),
+                    '%d products created successfully',
+                    len(self)
+                ),
                 'type': 'success',
             }
         }

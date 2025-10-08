@@ -65,11 +65,11 @@ class CJDropshippingOrder(models.Model):
 
     # Logistics
     logistics_info = fields.Text('Logistics Information')
-    last_logistics_update = fields.Datetime('Last Logistics Update')
+    last_logistics_update = fields.Datetime()
 
     # Messages
-    error_message = fields.Text('Error Message')
-    notes = fields.Text('Notes')
+    error_message = fields.Text()
+    notes = fields.Text()
 
     # JSON Data
     request_data = fields.Text('Request Data (JSON)')
@@ -122,8 +122,9 @@ class CJDropshippingOrder(models.Model):
                 # Update sale order
                 self.sale_order_id.message_post(
                     body=self.env._(
-                        'Order submitted to CJDropshipping. Order ID: %s'
-                    ) % result['orderId']
+                        'Order submitted to CJDropshipping. Order ID: %s',
+                        result['orderId']
+                    )
                 )
 
                 return {
@@ -132,8 +133,9 @@ class CJDropshippingOrder(models.Model):
                     'params': {
                         'title': self.env._('Success'),
                         'message': self.env._(
-                            'Order submitted successfully. CJ Order ID: %s'
-                        ) % result['orderId'],
+                            'Order submitted successfully. CJ Order ID: %s',
+                            result['orderId']
+                        ),
                         'type': 'success',
                     }
                 }
@@ -153,8 +155,8 @@ class CJDropshippingOrder(models.Model):
             })
 
             raise UserError(
-                self.env._('Failed to submit order: %s') % error_msg
-            )
+                self.env._('Failed to submit order: %s', error_msg)
+            ) from exc
 
     def _prepare_cj_order_data(self):
         """Prepare order data for CJDropshipping API."""
@@ -237,8 +239,8 @@ class CJDropshippingOrder(models.Model):
         except Exception as exc:
             _logger.error("Failed to update order status: %s", str(exc))
             raise UserError(
-                self.env._('Failed to update order status: %s') % str(exc)
-            )
+                self.env._('Failed to update order status: %s', str(exc))
+            ) from exc
 
     def action_query_logistics(self):
         """Query logistics information."""
@@ -276,8 +278,8 @@ class CJDropshippingOrder(models.Model):
         except Exception as exc:
             _logger.error("Failed to query logistics: %s", str(exc))
             raise UserError(
-                self.env._('Failed to query logistics: %s') % str(exc)
-            )
+                self.env._('Failed to query logistics: %s', str(exc))
+            ) from exc
 
     def _update_from_cj_data(self, cj_data):
         """Update order from CJDropshipping data."""
@@ -306,5 +308,8 @@ class CJDropshippingOrder(models.Model):
         # Post message to sale order
         if self.tracking_number:
             self.sale_order_id.message_post(
-                body=_('Tracking number updated: %s') % self.tracking_number
+                body=self.env._(
+                    'Tracking number updated: %s',
+                    self.tracking_number
+                )
             )
