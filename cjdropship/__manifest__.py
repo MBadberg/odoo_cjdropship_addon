@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-"""CJDropshipping Integration Module for Odoo."""
 {
     'name': 'CJDropshipping Integration',
     'version': '19.1.0.0.0',
