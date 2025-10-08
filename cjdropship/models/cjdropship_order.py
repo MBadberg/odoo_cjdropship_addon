@@ -225,18 +225,18 @@ class CJDropshippingOrder(models.Model):
             if result:
                 self._update_from_cj_data(result)
 
-                return {
-                    'type': 'ir.actions.client',
-                    'tag': 'display_notification',
-                    'params': {
-                        'title': self.env._('Success'),
-                        'message': self.env._(
-                            'Order status updated successfully'
-                        ),
-                        'type': 'success',
-                    }
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': self.env._('Success'),
+                    'message': self.env._(
+                        'Order status updated successfully'
+                    ),
+                    'type': 'success',
                 }
-        except Exception as exc:
+            }
+        except (UserError, ValueError) as exc:
             _logger.error("Failed to update order status: %s", str(exc))
             raise UserError(
                 self.env._('Failed to update order status: %s', str(exc))
@@ -254,7 +254,6 @@ class CJDropshippingOrder(models.Model):
             result = client.query_logistics(self.cj_order_id)
 
             if result:
-                import json
                 self.write({
                     'logistics_info': json.dumps(result, indent=2),
                     'last_logistics_update': fields.Datetime.now(),
@@ -264,18 +263,18 @@ class CJDropshippingOrder(models.Model):
                 if result.get('trackingNumber'):
                     self.tracking_number = result['trackingNumber']
 
-                return {
-                    'type': 'ir.actions.client',
-                    'tag': 'display_notification',
-                    'params': {
-                        'title': self.env._('Success'),
-                        'message': self.env._(
-                            'Logistics information updated'
-                        ),
-                        'type': 'success',
-                    }
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': self.env._('Success'),
+                    'message': self.env._(
+                        'Logistics information updated'
+                    ),
+                    'type': 'success',
                 }
-        except Exception as exc:
+            }
+        except (UserError, ValueError) as exc:
             _logger.error("Failed to query logistics: %s", str(exc))
             raise UserError(
                 self.env._('Failed to query logistics: %s', str(exc))
