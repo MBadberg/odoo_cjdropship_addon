@@ -28,10 +28,10 @@ jobs:
         run: pip install -r maintainer-quality-tools/requirements.txt
 
       - name: Run pylint-odoo
-        run: maintainer-quality-tools/travis/run_pylint.sh .
+        run: maintainer-quality-tools/run_pylint.sh .
 
       - name: Run flake8
-        run: maintainer-quality-tools/travis/run_flake8.sh .
+        run: maintainer-quality-tools/run_flake8.sh .
 
       - name: Run black
-        run: maintainer-quality-tools/travis/run_black.sh .
+        run: maintainer-quality-tools/run_black.sh .
