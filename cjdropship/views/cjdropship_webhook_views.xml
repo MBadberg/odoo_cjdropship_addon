@@ -72,6 +72,7 @@
                 <field name="webhook_type"/>
                 <field name="event"/>
                 <field name="cj_order_id"/>
+                <field name="order_id"/>
                 <filter string="Not Processed" name="not_processed" domain="[('processed', '=', False)]"/>
                 <filter string="Processed" name="processed" domain="[('processed', '=', True)]"/>
                 <filter string="With Errors" name="with_errors" domain="[('error_message', '!=', False)]"/>
@@ -88,6 +89,8 @@
         <field name="name">CJDropshipping Webhooks</field>
         <field name="res_model">cjdropship.webhook</field>
         <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_cjdropship_webhook_list"/>
+        <field name="search_view_id" ref="view_cjdropship_webhook_search"/>
         <field name="context">{'search_default_not_processed': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
