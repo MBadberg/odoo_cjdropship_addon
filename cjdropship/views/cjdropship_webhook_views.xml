@@ -1,105 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <data>
     
-    <!-- Webhook Form View -->
-    <record id="view_cjdropship_webhook_form" model="ir.ui.view">
-        <field name="name">cjdropship.webhook.form</field>
-        <field name="model">cjdropship.webhook</field>
-        <field name="arch" type="xml">
-            <form string="CJDropshipping Webhook">
-                <header>
-                    <button name="action_process_webhook" string="Process Webhook" type="object" 
-                        class="oe_highlight" invisible="processed"/>
-                </header>
-                <sheet>
-                    <div class="oe_title">
-                        <label for="webhook_type" string="Webhook Type"/>
-                        <h1>
-                            <field name="webhook_type"/>
-                        </h1>
-                    </div>
-                    <group>
+        <!-- Webhook Form View -->
+        <record id="view_cjdropship_webhook_form" model="ir.ui.view">
+            <field name="name">cjdropship.webhook.form</field>
+            <field name="model">cjdropship.webhook</field>
+            <field name="arch" type="xml">
+                <form string="CJDropshipping Webhook">
+                    <header>
+                        <button name="action_process_webhook" string="Process Webhook" type="object" 
+                            class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="webhook_type" string="Webhook Type"/>
+                            <h1>
+                                <field name="webhook_type"/>
+                            </h1>
+                        </div>
                         <group>
-                            <field name="event"/>
-                            <field name="cj_order_id"/>
-                            <field name="order_id"/>
-                            <field name="processed"/>
+                            <group>
+                                <field name="event"/>
+                                <field name="cj_order_id"/>
+                                <field name="order_id"/>
+                                <field name="processed"/>
+                            </group>
+                            <group>
+                                <field name="create_date" string="Received Date"/>
+                                <field name="process_date"/>
+                            </group>
                         </group>
-                        <group>
-                            <field name="create_date" string="Received Date"/>
-                            <field name="process_date"/>
-                        </group>
+                        <notebook>
+                            <page string="Payload" name="payload">
+                                <field name="payload" widget="text"/>
+                            </page>
+                            <page string="Headers" name="headers">
+                                <field name="headers" widget="text"/>
+                            </page>
+                            <page string="Error" name="error">
+                                <field name="error_message" widget="text"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Webhook List View -->
+        <record id="view_cjdropship_webhook_list" model="ir.ui.view">
+            <field name="name">cjdropship.webhook.list</field>
+            <field name="model">cjdropship.webhook</field>
+            <field name="arch" type="xml">
+                <list string="CJDropshipping Webhooks">
+                    <field name="webhook_type"/>
+                    <field name="event"/>
+                    <field name="cj_order_id"/>
+                    <field name="order_id"/>
+                    <field name="create_date" string="Received"/>
+                    <field name="processed"/>
+                    <field name="process_date"/>
+                </list>
+            </field>
+        </record>
+        
+        <!-- Webhook Search View -->
+        <record id="view_cjdropship_webhook_search" model="ir.ui.view">
+            <field name="name">cjdropship.webhook.search</field>
+            <field name="model">cjdropship.webhook</field>
+            <field name="arch" type="xml">
+                <search string="Search Webhooks">
+                    <field name="webhook_type"/>
+                    <field name="event"/>
+                    <field name="cj_order_id"/>
+                    <field name="order_id"/>
+                    <separator/>
+                    <filter string="Not Processed" name="not_processed" domain="[('processed', '=', False)]"/>
+                    <filter string="Processed" name="processed" domain="[('processed', '=', True)]"/>
+                    <filter string="With Errors" name="with_errors" domain="[('error_message', '!=', False)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Type" name="group_type" context="{'group_by': 'webhook_type'}"/>
+                        <filter string="Processed" name="group_processed" context="{'group_by': 'processed'}"/>
                     </group>
-                    <notebook>
-                        <page string="Payload" name="payload">
-                            <field name="payload" widget="text"/>
-                        </page>
-                        <page string="Headers" name="headers">
-                            <field name="headers" widget="text"/>
-                        </page>
-                        <page string="Error" name="error" invisible="not error_message">
-                            <field name="error_message" widget="text"/>
-                        </page>
-                    </notebook>
-                </sheet>
-            </form>
-        </field>
-    </record>
-    
-    <!-- Webhook List View -->
-    <record id="view_cjdropship_webhook_list" model="ir.ui.view">
-        <field name="name">cjdropship.webhook.list</field>
-        <field name="model">cjdropship.webhook</field>
-        <field name="arch" type="xml">
-            <list string="CJDropshipping Webhooks" decoration-muted="processed">
-                <field name="webhook_type"/>
-                <field name="event"/>
-                <field name="cj_order_id"/>
-                <field name="order_id"/>
-                <field name="create_date" string="Received"/>
-                <field name="processed"/>
-                <field name="process_date"/>
-            </list>
-        </field>
-    </record>
-    
-    <!-- Webhook Search View -->
-    <record id="view_cjdropship_webhook_search" model="ir.ui.view">
-        <field name="name">cjdropship.webhook.search</field>
-        <field name="model">cjdropship.webhook</field>
-        <field name="arch" type="xml">
-            <search string="Search Webhooks">
-                <field name="webhook_type"/>
-                <field name="event"/>
-                <field name="cj_order_id"/>
-                <field name="order_id"/>
-                <filter string="Not Processed" name="not_processed" domain="[('processed', '=', False)]"/>
-                <filter string="Processed" name="processed" domain="[('processed', '=', True)]"/>
-                <filter string="With Errors" name="with_errors" domain="[('error_message', '!=', False)]"/>
-                <group expand="0" string="Group By">
-                    <filter string="Type" name="group_type" context="{'group_by': 'webhook_type'}"/>
-                    <filter string="Processed" name="group_processed" context="{'group_by': 'processed'}"/>
-                </group>
-            </search>
-        </field>
-    </record>
-    
-    <!-- Webhook Action -->
-    <record id="action_cjdropship_webhook" model="ir.actions.act_window">
-        <field name="name">CJDropshipping Webhooks</field>
-        <field name="res_model">cjdropship.webhook</field>
-        <field name="view_mode">list,form</field>
-        <field name="view_id" ref="view_cjdropship_webhook_list"/>
-        <field name="search_view_id" ref="view_cjdropship_webhook_search"/>
-        <field name="context">{'search_default_not_processed': 1}</field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                No webhooks received yet
-            </p>
-            <p>
-                Webhooks from CJDropshipping will appear here when configured.
-            </p>
-        </field>
-    </record>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Webhook Action -->
+        <record id="action_cjdropship_webhook" model="ir.actions.act_window">
+            <field name="name">CJDropshipping Webhooks</field>
+            <field name="res_model">cjdropship.webhook</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{'search_default_not_processed': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No webhooks received yet
+                </p>
+                <p>
+                    Webhooks from CJDropshipping will appear here when configured.
+                </p>
+            </field>
+        </record>
 
+    </data>
 </odoo>
