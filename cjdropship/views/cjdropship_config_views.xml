@@ -20,11 +20,6 @@
                                 <span class="o_stat_text">Products</span>
                             </div>
                         </button>
-                        <button class="oe_stat_button" name="%(action_cjdropship_order)d" type="action" icon="fa-truck">
-                            <div class="o_stat_info">
-                                <span class="o_stat_text">Orders</span>
-                            </div>
-                        </button>
                     </div>
                     <div class="oe_title">
                         <label for="name" string="Configuration Name"/>
@@ -88,9 +83,9 @@
         </field>
     </record>
     
-    <!-- Configuration Tree View -->
-    <record id="view_cjdropship_config_tree" model="ir.ui.view">
-        <field name="name">cjdropship.config.tree</field>
+    <!-- Configuration List View -->
+    <record id="view_cjdropship_config_list" model="ir.ui.view">
+        <field name="name">cjdropship.config.list</field>
         <field name="model">cjdropship.config</field>
         <field name="arch" type="xml">
             <list string="CJDropshipping Configurations">
@@ -107,7 +102,7 @@
     <record id="action_cjdropship_config" model="ir.actions.act_window">
         <field name="name">CJDropshipping Configuration</field>
         <field name="res_model">cjdropship.config</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Configure CJDropshipping Integration
