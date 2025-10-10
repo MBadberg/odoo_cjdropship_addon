@@ -38,7 +38,7 @@
                             <field name="headers" widget="text"/>
                         </page>
                         <page string="Error" name="error" invisible="not error_message">
-                            <field name="error_message"/>
+                            <field name="error_message" widget="text"/>
                         </page>
                     </notebook>
                 </sheet>
@@ -47,7 +47,7 @@
     </record>
     
     <!-- Webhook List View -->
-    <record id="view_cjdropship_webhook_tree" model="ir.ui.view">
+    <record id="view_cjdropship_webhook_list" model="ir.ui.view">
         <field name="name">cjdropship.webhook.list</field>
         <field name="model">cjdropship.webhook</field>
         <field name="arch" type="xml">
