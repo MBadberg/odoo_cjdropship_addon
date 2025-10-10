@@ -64,9 +64,9 @@
         </field>
     </record>
     
-    <!-- Order Tree View -->
-    <record id="view_cjdropship_order_tree" model="ir.ui.view">
-        <field name="name">cjdropship.order.tree</field>
+    <!-- Order List View -->
+    <record id="view_cjdropship_order_list" model="ir.ui.view">
+        <field name="name">cjdropship.order.list</field>
         <field name="model">cjdropship.order</field>
         <field name="arch" type="xml">
             <list string="CJDropshipping Orders" decoration-info="state == 'draft'" 
@@ -96,4 +96,21 @@
             </search>
         </field>
     </record>
+
+    <!-- Order Action -->
+    <record id="action_cjdropship_order" model="ir.actions.act_window">
+        <field name="name">CJDropshipping Orders</field>
+        <field name="res_model">cjdropship.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_draft': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No CJDropshipping orders yet
+            </p>
+            <p>
+                Orders will appear here when submitted to CJDropshipping.
+            </p>
+        </field>
+    </record>
+
 </odoo>
