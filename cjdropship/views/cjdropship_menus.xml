@@ -32,6 +32,13 @@
         action="action_cjdropship_product"
         sequence="10"/>
     
+    <!-- NEU: Product Import Wizard -->
+    <menuitem id="menu_cjdropship_product_import"
+        name="Import Products"
+        parent="menu_cjdropship_products"
+        action="action_product_import_wizard"
+        sequence="20"/>
+    
     <!-- Orders Menu -->
     <menuitem id="menu_cjdropship_orders"
         name="Orders"
