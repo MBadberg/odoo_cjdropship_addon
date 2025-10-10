@@ -9,7 +9,7 @@
             <form string="CJDropshipping Webhook">
                 <header>
                     <button name="action_process_webhook" string="Process Webhook" type="object" 
-                        class="oe_highlight" attrs="{'invisible': [('processed', '=', True)]}"/>
+                        class="oe_highlight" column_invisible="processed"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
@@ -37,7 +37,7 @@
                         <page string="Headers" name="headers">
                             <field name="headers" widget="text"/>
                         </page>
-                        <page string="Error" name="error" attrs="{'invisible': [('error_message', '=', False)]}">
+                        <page string="Error" name="error" column_invisible="not error_message">
                             <field name="error_message"/>
                         </page>
                     </notebook>
