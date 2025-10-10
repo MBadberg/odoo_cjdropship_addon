@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 {
     'name': 'CJDropshipping Integration',
     'version': '19.0.1.0.0',
