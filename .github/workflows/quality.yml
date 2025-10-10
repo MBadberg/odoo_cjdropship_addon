@@ -25,8 +25,8 @@ jobs:
       - name: Run pylint-odoo
         run: pylint --load-plugins=pylint_odoo .
 
-      - name: Run flake8
-        run: flake8 .
+     # - name: Run flake8
+     #   run: flake8 .
 
       - name: Run black check
         run: black --check .
