@@ -1,13 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-CJDropshipping Integration Module for Odoo.
-
-This module provides integration with CJDropshipping API for:
-- Product import and synchronization
-- Order fulfillment automation  
-- Webhook handling for status updates
-- Inventory management
-"""
 {
     'name': 'CJDropshipping Integration',
     'version': '19.0.1.0.0',
@@ -16,6 +7,15 @@ This module provides integration with CJDropshipping API for:
         'Integration with CJDropshipping API for product import '
         'and order fulfillment'
     ),
+    'description': """
+CJDropshipping Integration Module for Odoo.
+
+This module provides integration with CJDropshipping API for:
+- Product import and synchronization
+- Order fulfillment automation  
+- Webhook handling for status updates
+- Inventory management
+    """,
     'author': 'Markus Badberg IT Spezialist, Odoo Community Association (OCA)',
     'website': 'https://badberg.online',
     'license': 'LGPL-3',
