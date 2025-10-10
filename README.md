@@ -1,4 +1,4 @@
-# WORK in PROGESS! Not yet working!
+# WORK in PROGESS!
 
 # CJDropshipping Odoo 19 Integration
 
