@@ -31,7 +31,7 @@ class CJDropshippingAPI:
 
     def _authenticate(self):
         """Authenticate with CJDropshipping API"""
-        url = f"{self.base_url}/authentication/getAccessToken"
+        url = f"{self.base_url}/authentication/accessToken"
 
         payload = {
             'email': self.email,
