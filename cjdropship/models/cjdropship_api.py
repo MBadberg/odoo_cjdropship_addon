@@ -39,7 +39,27 @@ class CJDropshippingAPI:
         }
 
         try:
+            # Debug logging for troubleshooting
+            _logger.info(f"CJ API Debug - Request URL: {url}")
+            _logger.info(f"CJ API Debug - Request Payload: {payload}")
+            _logger.info(f"CJ API Debug - Base URL: {self.base_url}")
+            
             response = requests.post(url, json=payload, timeout=30)
+            
+            # Log detailed response information
+            _logger.info(f"CJ API Debug - Response Status Code: {response.status_code}")
+            _logger.info(f"CJ API Debug - Response Headers: {dict(response.headers)}")
+            _logger.info(f"CJ API Debug - Response Content-Type: {response.headers.get('content-type', 'N/A')}")
+            _logger.info(f"CJ API Debug - Response Text: {response.text}")
+            _logger.info(f"CJ API Debug - Response URL: {response.url}")
+            
+            # Try to parse JSON response
+            try:
+                response_json = response.json()
+                _logger.info(f"CJ API Debug - Response JSON: {response_json}")
+            except Exception as json_error:
+                _logger.error(f"CJ API Debug - Failed to parse JSON: {json_error}")
+            
             response.raise_for_status()
 
             data = response.json()
@@ -52,6 +72,7 @@ class CJDropshippingAPI:
                 )
             else:
                 error_msg = data.get('message', 'Unknown error')
+                _logger.error(f"CJ API Debug - Authentication failed - Response Code: {data.get('code')}, Message: {error_msg}, Full Response: {data}")
                 raise ValueError(
                     f"Authentication failed: {error_msg}"
                 )
@@ -60,6 +81,8 @@ class CJDropshippingAPI:
             _logger.error(
                 "CJDropshipping API authentication error: %s", str(e)
             )
+            _logger.error(f"CJ API Debug - Exception type: {type(e).__name__}")
+            _logger.error(f"CJ API Debug - Exception details: {str(e)}")
             raise
 
     def _make_request(self, method, endpoint, data=None, params=None):
