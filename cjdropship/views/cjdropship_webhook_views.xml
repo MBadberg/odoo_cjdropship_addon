@@ -9,7 +9,7 @@
             <form string="CJDropshipping Webhook">
                 <header>
                     <button name="action_process_webhook" string="Process Webhook" type="object" 
-                        class="oe_highlight" column_invisible="processed"/>
+                        class="oe_highlight" invisible="processed"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
@@ -37,7 +37,7 @@
                         <page string="Headers" name="headers">
                             <field name="headers" widget="text"/>
                         </page>
-                        <page string="Error" name="error" column_invisible="not error_message">
+                        <page string="Error" name="error" invisible="not error_message">
                             <field name="error_message"/>
                         </page>
                     </notebook>
@@ -46,12 +46,12 @@
         </field>
     </record>
     
-    <!-- Webhook Tree View -->
+    <!-- Webhook List View -->
     <record id="view_cjdropship_webhook_tree" model="ir.ui.view">
-        <field name="name">cjdropship.webhook.tree</field>
+        <field name="name">cjdropship.webhook.list</field>
         <field name="model">cjdropship.webhook</field>
         <field name="arch" type="xml">
-            <tree string="CJDropshipping Webhooks" decoration-muted="processed">
+            <list string="CJDropshipping Webhooks" decoration-muted="processed">
                 <field name="webhook_type"/>
                 <field name="event"/>
                 <field name="cj_order_id"/>
@@ -59,7 +59,7 @@
                 <field name="create_date" string="Received"/>
                 <field name="processed"/>
                 <field name="process_date"/>
-            </tree>
+            </list>
         </field>
     </record>
     
@@ -87,7 +87,7 @@
     <record id="action_cjdropship_webhook" model="ir.actions.act_window">
         <field name="name">CJDropshipping Webhooks</field>
         <field name="res_model">cjdropship.webhook</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{'search_default_not_processed': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
