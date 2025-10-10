@@ -82,9 +82,17 @@ sudo systemctl restart odoo
 
 ## Konfiguration
 
+Bei der Installation wird automatisch eine Standard-Konfiguration mit folgenden Voreinstellungen erstellt:
+- Auto Sync Products: Deaktiviert
+- Sync Interval: 24 Stunden
+- Auto Fulfill Orders: Deaktiviert
+- Default Product Type: Consumable
+- Price Markup: 30% (Percentage)
+- Webhook Enabled: Aktiviert
+
 ### Grundkonfiguration
 
-1. Navigieren Sie zu: **CJDropshipping > Konfiguration > Einstellungen**
+1. Navigieren Sie zu: **CJDropshipping > Configuration > API Settings**
 2. Geben Sie Ihre CJDropshipping API-Zugangsdaten ein:
    - **API Email**: Ihre CJDropshipping Account-Email
    - **API Password**: Ihr CJDropshipping Account-Passwort
@@ -116,8 +124,8 @@ sudo systemctl restart odoo
 Es gibt mehrere Wege, Produkte zu importieren:
 
 **Wizard-basierter Import:**
-1. Navigieren Sie zu **CJDropshipping > Konfiguration > Einstellungen**
-2. Klicken Sie auf **"Produkte importieren"**
+1. Navigieren Sie zu **CJDropshipping > Configuration > API Settings**
+2. Klicken Sie auf **"Produkte importieren"** (Button in der Formularansicht)
 3. Wählen Sie im Wizard:
    - **Configuration**: Die zu verwendende API-Konfiguration
    - **Category Filter**: (Optional) Filtern nach CJ-Kategorie
@@ -171,8 +179,9 @@ Webhooks ermöglichen automatische Updates von CJDropshipping:
 - **Inventory Update**: Lagerbestandsänderungen
 
 **Webhook-Logs anzeigen:**
-- **CJDropshipping > Technisch > Webhooks** (wenn Developer-Modus aktiv)
+- **CJDropshipping > Webhooks**
 - Zeigt alle empfangenen Webhooks mit Payload und Verarbeitungsstatus
+- ⚠️ Menü ist nur für Systemadministratoren sichtbar
 
 ## Technische Details
 
