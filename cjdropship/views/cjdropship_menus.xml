@@ -5,7 +5,8 @@
     <menuitem id="menu_cjdropship_root"
         name="CJDropshipping"
         sequence="100"
-        web_icon="fa-truck"/>
+        web_icon="cjdropship,static/description/icon.png"
+        groups="cjdropship.group_cjdropship_user"/>
     
     <!-- Products Menu -->
     <menuitem id="menu_cjdropship_products"
