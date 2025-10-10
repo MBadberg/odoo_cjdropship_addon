@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     
-    <!-- Main Menu -->
+    <!-- Main Menu - für Sales User UND System Administratoren -->
     <menuitem id="menu_cjdropship_root"
         name="CJDropshipping"
         sequence="100"
-        web_icon="cjdropship,static/description/icon.png"
-        groups="cjdropship.group_cjdropship_user"/>
+        web_icon="fa-truck"
+        groups="sales_team.group_sale_salesman,base.group_system"/>
     
     <!-- Products Menu -->
     <menuitem id="menu_cjdropship_products"
@@ -39,12 +39,12 @@
         action="action_cjdropship_webhook"
         sequence="30"/>
     
-    <!-- Configuration Menu -->
+    <!-- Configuration Menu - für Sales Manager UND System Administratoren -->
     <menuitem id="menu_cjdropship_configuration"
         name="Configuration"
         parent="menu_cjdropship_root"
         sequence="100"
-        groups="cjdropship.group_cjdropship_manager"/>
+        groups="sales_team.group_sale_manager,base.group_system"/>
     
     <menuitem id="menu_cjdropship_config_settings"
         name="Settings"
