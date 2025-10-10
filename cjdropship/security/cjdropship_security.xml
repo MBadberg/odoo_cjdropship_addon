@@ -7,11 +7,10 @@
         <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
     </record>
     
-    <!-- CJDropshipping Manager Group - für Sales Manager und System Admin -->
+    <!-- CJDropshipping Manager Group - für Sales Manager -->
     <record id="group_cjdropship_manager" model="res.groups">
         <field name="name">CJDropshipping / Manager</field>
         <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
-        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
     </record>
     
     <!-- Record Rules für normale User -->
