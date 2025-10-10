@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     
-    <!-- Main Menu - für Sales User UND System Administratoren -->
+    <!-- Main Menu - für System Administratoren -->
     <menuitem id="menu_cjdropship_root"
         name="CJDropshipping"
         sequence="100"
         web_icon="fa-truck"
-        groups="sales_team.group_sale_salesman,base.group_system"/>
+        groups="base.group_system"/>
+    
+    <!-- Configuration Menu - als erstes sichtbar -->
+    <menuitem id="menu_cjdropship_configuration"
+        name="Configuration"
+        parent="menu_cjdropship_root"
+        sequence="1"/>
+    
+    <menuitem id="menu_cjdropship_config_settings"
+        name="API Settings"
+        parent="menu_cjdropship_configuration"
+        action="action_cjdropship_config"
+        sequence="10"/>
     
     <!-- Products Menu -->
     <menuitem id="menu_cjdropship_products"
@@ -38,18 +50,5 @@
         parent="menu_cjdropship_root"
         action="action_cjdropship_webhook"
         sequence="30"/>
-    
-    <!-- Configuration Menu - für Sales Manager UND System Administratoren -->
-    <menuitem id="menu_cjdropship_configuration"
-        name="Configuration"
-        parent="menu_cjdropship_root"
-        sequence="100"
-        groups="sales_team.group_sale_manager,base.group_system"/>
-    
-    <menuitem id="menu_cjdropship_config_settings"
-        name="Settings"
-        parent="menu_cjdropship_configuration"
-        action="action_cjdropship_config"
-        sequence="10"/>
 
 </odoo>
