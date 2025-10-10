@@ -206,6 +206,10 @@ Webhooks ermöglichen automatische Updates von CJDropshipping:
 - Felder: webhook_type, cj_order_id, event, payload, headers, processed, error_message
 - Methoden: action_process_webhook(), _process_order_status_update(), _process_tracking_update(), _process_inventory_update()
 
+**cjdropship.product.import.wizard** - Produkt-Import-Wizard (TransientModel)
+- Felder: config_id, category_id, page_number, page_size, create_odoo_products, state, imported_count, error_message
+- Methoden: action_import_products()
+
 ### API-Client (CJDropshippingAPI)
 
 Die Klasse `CJDropshippingAPI` in `models/cjdropship_api.py` bietet:
