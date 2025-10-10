@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 CJDropshipping Integration Module for Odoo.
 
